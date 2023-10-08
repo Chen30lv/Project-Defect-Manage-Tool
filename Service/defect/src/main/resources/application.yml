@@ -1,16 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/defectManagement
+    url: jdbc:mysql://localhost:3306/DEFECT?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
     username: root
-    password: 010609dy
+    password: 123456
   jpa:
     hibernate:
-      ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+      ddl-auto: update
     show-sql: true
-    generate-ddl: true
+    open-in-view: true
 logging:
   level:
     org.springframework.orm.jpa: DEBUG
