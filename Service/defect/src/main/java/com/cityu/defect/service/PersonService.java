@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,7 +21,7 @@ public class PersonService {
     public int addPerson(String account, String password){
 
         try {
-            personRepository.save(new Person(account, password));
+            personRepository.save(new Person(account, password, new Timestamp(System.currentTimeMillis())));
         }catch (Exception e){
             e.printStackTrace();
 

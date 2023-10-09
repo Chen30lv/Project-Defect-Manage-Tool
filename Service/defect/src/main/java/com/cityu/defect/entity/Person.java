@@ -3,6 +3,7 @@ package com.cityu.defect.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * @author Ding Yi
@@ -30,14 +31,21 @@ public class Person {
     @Column(name="account_passwd",nullable = false,columnDefinition = "varchar(32) COMMENT '账户密码'")
     private String password;
 
+    /**
+     * 用户创建时间
+     */
+    @Column(name = "createTime", updatable = false, nullable = false)
+    private Timestamp createTime;
+
     public Person() {
 
     }
 
-    public Person(String account, String password) {
+    public Person(String account, String password, Timestamp createTime) {
         super();
         this.account = account;
         this.password = password;
+        this.createTime = createTime;
     }
 
 }
