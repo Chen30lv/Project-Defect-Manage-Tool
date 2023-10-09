@@ -1,2 +1,2 @@
-# Project-Defect-Manege-Tool
+# Project-Defect-Manage-Tool
 This is about the Final Project of CS5351 in CityU
