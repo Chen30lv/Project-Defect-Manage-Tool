@@ -1,5 +1,7 @@
 package com.cityu.defect.controller;
 
+import com.cityu.defect.common.BaseResponse;
+import com.cityu.defect.common.ResultUtils;
 import com.cityu.defect.entity.Person;
 import com.cityu.defect.repository.PersonRepository;
 import com.cityu.defect.service.PersonService;
@@ -23,13 +25,13 @@ public class HelloController {
 
     @ApiOperation("初始化方法")//@ApiOperation：注解来给API增加方法说明
     @GetMapping("/hello")
-    public String get(){
+    public BaseResponse<String> get(){
         List<Person> list = personRepository.findAll();
         String str = "";
         for(Person p : list){
             str = str.concat(p.toString());
         }
-        return str;
+        return ResultUtils.success(str);
     }
 
     /**
