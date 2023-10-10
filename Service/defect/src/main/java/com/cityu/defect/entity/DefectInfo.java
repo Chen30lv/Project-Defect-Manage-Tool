@@ -1,6 +1,8 @@
 package com.cityu.defect.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -8,6 +10,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "DEFECT_INFO")

@@ -1,6 +1,8 @@
 package com.cityu.defect.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +11,8 @@ import java.sql.Timestamp;
  * @author Ding Yi
  * @CreateDate: 2023年10月7日14:44:47
  */
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 @Table(name = "PERSON")
@@ -36,10 +40,6 @@ public class Person {
      */
     @Column(name = "createTime", updatable = false, nullable = false)
     private Timestamp createTime;
-
-    public Person() {
-
-    }
 
     public Person(String account, String password, Timestamp createTime) {
         super();
