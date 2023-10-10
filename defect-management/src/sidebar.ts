@@ -1,59 +1,121 @@
 import * as vscode from 'vscode';
 
-export class SidebarProvider {
-    // 创建 WebviewPanel
-    private _panel?: vscode.WebviewPanel;
+const scripts = [
+  {
+    script: 'webpack:dev',
+  },
+  {
+    script: 'webpack:prod',
+  },
+  {
+    script: 'server:dev',
+  },
+  {
+    script: 'server:test',
+  },
+  {
+    script: 'server:test-1',
+  },
+  {
+    script: 'server:test-2',
+  },
+];
 
-    // 定义构造函数
-    constructor(private readonly _context: vscode.ExtensionContext) {}
-
-    // 定义命令处理函数
-    public showSidebar() {
-        // 创建或显示现有的 WebviewPanel
-        if (!this._panel) {
-            this.createSidebar();
-        } else {
-            this._panel.reveal();
-        }
-    }
-
-    // 创建 WebviewPanel
-    private createSidebar() {
-        // 创建 WebviewPanel
-        this._panel = vscode.window.createWebviewPanel(
-            'customSidebar',
-            'Custom Sidebar',
-            vscode.ViewColumn.Beside,
-            {
-                // 允许运行脚本
-                enableScripts: true
-            }
-        );
-
-        // 设置 Webview 内容
-        this._panel.webview.html = this.getWebviewContent();
-
-        // 监听面板关闭事件
-        this._panel.onDidDispose(() => {
-            this._panel = undefined;
-        });
-    }
-
-    // 获取 Webview 内容
-    private getWebviewContent() {
-        // 这里可以编写 HTML 和 JavaScript 代码，用于自定义你的侧边栏视图
-        const content = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Custom Sidebar</title>
-            </head>
-            <body>
-                <p>Here</p>
-            </body>
-            </html>
-        `;
-
-        return content;
-    }
+// Custom Tree Item Class
+class SideBarEntryItem extends vscode.TreeItem {
+  constructor(private version: string, public readonly label: string, public readonly collapsibleState: vscode.TreeItemCollapsibleState
+  ) {
+    super(label, collapsibleState);
+    this.tooltip = `${this.label}-${this.version}`;
+    this.description = `${this.version}-${Math.ceil(Math.random() * 1000)}`;
+  }
 }
+
+// Tree Data Provider for BeeHive Command View
+export class SideBarBeeHiveCommand implements vscode.TreeDataProvider<SideBarEntryItem> {
+  constructor(private workspaceRoot?: string) {}
+
+  getTreeItem(element: SideBarEntryItem): vscode.TreeItem {
+    return element;
+  }
+
+  getChildren(element?: SideBarEntryItem): vscode.ProviderResult<SideBarEntryItem[]> {
+    if (element) {
+      // Children nodes
+      var childrenList = [];
+      for (let index = 0; index < scripts.length; index++) {
+        var item = new SideBarEntryItem('1.0.0', scripts[index].script, vscode.TreeItemCollapsibleState.None);
+        item.command = {
+          command: 'DM-General.openChild', // Command ID
+          title: scripts[index].script,
+          arguments: [scripts[index].script], // Arguments passed to the command
+        };
+        childrenList[index] = item;
+      }
+      return childrenList;
+    } else {
+      // Root node
+      return [
+        new SideBarEntryItem('1.0.0', 'Button Group', vscode.TreeItemCollapsibleState.Collapsed),
+      ];
+    }
+  }
+}
+
+// Tree Data Provider for BeeHive Package Analysis View
+export class SideBarBeeHivePackageAnalysis implements vscode.TreeDataProvider<SideBarEntryItem> {
+  constructor(private workspaceRoot?: string) {}
+
+  getTreeItem(element: SideBarEntryItem): vscode.TreeItem {
+    return element;
+  }
+
+  getChildren(element?: SideBarEntryItem): vscode.ProviderResult<SideBarEntryItem[]> {
+    if (element) {
+      // Children nodes
+      var childrenList = [];
+      for (let index = 0; index < scripts.length; index++) {
+        var item = new SideBarEntryItem('1.0.0', scripts[index].script, vscode.TreeItemCollapsibleState.None);
+        item.command = {
+          command: 'DM-PackAnalysis.openChild', // Command ID
+          title: scripts[index].script,
+          arguments: [index], // Arguments passed to the command
+        };
+        childrenList[index] = item;
+      }
+      return childrenList;
+    } else {
+      // Root node
+      return [
+        new SideBarEntryItem('1.0.0', 'Button Group', vscode.TreeItemCollapsibleState.Collapsed),
+      ];
+    }
+  }
+}
+
+module.exports = function (context: vscode.ExtensionContext) {
+  // Register Sidebar Panels
+  const sidebarBeeHiveCommand = new SideBarBeeHiveCommand();
+  const sidebarBeeHivePackageAnalysis = new SideBarBeeHivePackageAnalysis();
+  vscode.window.registerTreeDataProvider(
+    'DM-General',
+    sidebarBeeHiveCommand
+  );
+  vscode.window.registerTreeDataProvider(
+    'DM-PackAnalysis',
+    sidebarBeeHivePackageAnalysis
+  );
+
+  // Register Commands
+  vscode.commands.registerCommand('DM-General.openChild', (args) => {
+    console.log('[DM-General.openChild] Currently selected:', args);
+    vscode.window.showInformationMessage(args);
+  });
+  vscode.commands.registerCommand(
+    'DM-PackAnalysis.openChild',
+    (args) => {
+      console.log('[DM-PackAnalysis.openChild] Currently selected:', args);
+      vscode.window.showInformationMessage(args);
+    }
+  );
+};
