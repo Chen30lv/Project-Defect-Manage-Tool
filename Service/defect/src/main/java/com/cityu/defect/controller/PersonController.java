@@ -8,8 +8,8 @@ import com.cityu.defect.entity.request.PersonLoginRequest;
 import com.cityu.defect.entity.request.PersonRegisterRequest;
 import com.cityu.defect.exception.BusinessException;
 import com.cityu.defect.service.PersonService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-@Api(tags = "Person Controller")//@Api：用在类上，说明该类的作用
 @RestController
 @RequestMapping("/person")
+@Slf4j
 public class PersonController {
     @Resource
     private PersonService personService;
