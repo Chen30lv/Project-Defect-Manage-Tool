@@ -3,30 +3,28 @@ package com.cityu.defect.exception;
 import com.cityu.defect.common.ErrorCode;
 
 public class BusinessException extends RuntimeException{
-    private final int code;
-    private final String description;
 
-    public BusinessException(String message, int code, String description) {
+    /**
+     * 错误码
+     */
+    private final int code;
+
+    public BusinessException(int code, String message) {
         super(message);
         this.code = code;
-        this.description = description;
     }
-    public BusinessException(ErrorCode errorCode, String description) {
-        super(errorCode.getMessage());
-        this.code = errorCode.getCode();
-        this.description = description;
-    }
+
     public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();
-        this.description = errorCode.getDescription();
+    }
+
+    public BusinessException(ErrorCode errorCode, String message) {
+        super(message);
+        this.code = errorCode.getCode();
     }
 
     public int getCode() {
         return code;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

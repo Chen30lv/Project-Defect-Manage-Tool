@@ -1,6 +1,6 @@
 package com.cityu.defect.service;
 
-import com.cityu.defect.entity.Person;
+import com.cityu.defect.model.entity.Person;
 
 import javax.servlet.http.HttpServletRequest;
 

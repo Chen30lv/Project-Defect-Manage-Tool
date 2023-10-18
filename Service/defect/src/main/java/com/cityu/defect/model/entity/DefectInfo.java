@@ -1,4 +1,4 @@
-package com.cityu.defect.entity;
+package com.cityu.defect.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "DEFECT_INFO")
-public class DefectInfo {
+public class DefectInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "defect_id",columnDefinition = "bigint(20) COMMENT '缺陷id'",nullable = false)
@@ -70,7 +71,7 @@ public class DefectInfo {
     /**
      * 缺陷创建时间
      */
-    @Column(name = "createTime", updatable = false , nullable = false)
+    @Column(name = "create_time", updatable = false , nullable = false)
     private Timestamp createTime;
 
     /**
@@ -79,4 +80,5 @@ public class DefectInfo {
     @Column(name = "last_edited_time", nullable = false)
     private Timestamp lastEditedTime;
 
+    private static final long serialVersionUID = 1L;
 }
