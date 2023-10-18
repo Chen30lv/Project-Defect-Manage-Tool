@@ -1,12 +1,13 @@
 package com.cityu.defect.service.impl;
 
 import com.cityu.defect.common.ErrorCode;
-import com.cityu.defect.entity.Person;
+import com.cityu.defect.model.entity.Person;
 import com.cityu.defect.exception.BusinessException;
 import com.cityu.defect.repository.PersonRepositoryJPA;
 import com.cityu.defect.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -71,20 +72,15 @@ public class PersonServiceImpl implements PersonService {
     public Person personLogin(String account, String password, HttpServletRequest request) {
         //1. 校验
         // 非空
-        if (account.isEmpty() || password.isEmpty()) {
+        if (StringUtils.isAnyBlank(account,password)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
         }
         //长度
         if (account.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号长度过短");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
         }
         if(password.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度过短");
-        }
-        //账户不能包含特殊字符
-        String pattern = ".*[*?!&￥$%^#,./@\";:><\\]\\[}{\\-=+_\\\\|》《。，、？’‘“”~`）].*$";
-        if(Pattern.matches(pattern, account)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号不能包含特殊字符");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码错误");
         }
         //2.加密
         String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());

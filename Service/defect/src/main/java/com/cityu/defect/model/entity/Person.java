@@ -1,10 +1,11 @@
-package com.cityu.defect.entity;
+package com.cityu.defect.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 @Entity
 @Data
 @Table(name = "PERSON")
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @Column(name = "person_id",columnDefinition = "bigint(20) COMMENT '用户id'",nullable = false)
@@ -38,7 +39,7 @@ public class Person {
     /**
      * 用户创建时间
      */
-    @Column(name = "createTime", updatable = false, nullable = false)
+    @Column(name = "create_time", updatable = false, nullable = false)
     private Timestamp createTime;
 
     public Person(String account, String password, Timestamp createTime) {
@@ -48,4 +49,5 @@ public class Person {
         this.createTime = createTime;
     }
 
+    private static final long serialVersionUID = 1L;
 }
