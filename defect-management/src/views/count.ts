@@ -33,6 +33,13 @@ class SideBarEntryItem extends vscode.TreeItem {
 
 // Tree Data Provider for BeeHive Command View
 export class SideBarBeeHiveCommand implements vscode.TreeDataProvider<SideBarEntryItem> {
+
+  private _onDidChangeTreeData: vscode.EventEmitter<SideBarEntryItem | undefined | null | void> = new vscode.EventEmitter<SideBarEntryItem | undefined | null | void>();
+  readonly onDidChangeTreeData: vscode.Event<SideBarEntryItem | undefined | null | void> = this._onDidChangeTreeData.event;
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
+  }
+
   constructor(private workspaceRoot?: string) {}
 
   getTreeItem(element: SideBarEntryItem): vscode.TreeItem {
@@ -64,6 +71,13 @@ export class SideBarBeeHiveCommand implements vscode.TreeDataProvider<SideBarEnt
 
 // Tree Data Provider for BeeHive Package Analysis View
 export class SideBarBeeHivePackageAnalysis implements vscode.TreeDataProvider<SideBarEntryItem> {
+
+  private _onDidChangeTreeData: vscode.EventEmitter<SideBarEntryItem | undefined | null | void> = new vscode.EventEmitter<SideBarEntryItem | undefined | null | void>();
+  readonly onDidChangeTreeData: vscode.Event<SideBarEntryItem | undefined | null | void> = this._onDidChangeTreeData.event;
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
+  }
+
   constructor(private workspaceRoot?: string) {}
 
   getTreeItem(element: SideBarEntryItem): vscode.TreeItem {
@@ -101,18 +115,10 @@ module.exports = function (context: vscode.ExtensionContext) {
     'DM-Count',
     sidebarBeeHiveCommand
   );
-  
-
-  // Register Commands
-  vscode.commands.registerCommand('DM-General.openChild', (args) => {
-    console.log('[DM-General.openChild] Currently selected:', args);
-    vscode.window.showInformationMessage(args);
-  });
-  vscode.commands.registerCommand(
-    'DM-PackAnalysis.openChild',
-    (args) => {
-      console.log('[DM-PackAnalysis.openChild] Currently selected:', args);
-      vscode.window.showInformationMessage(args);
-    }
+ 
+  vscode.commands.registerCommand('DM-Count.refresh', () => {
+    sidebarBeeHiveCommand.refresh();
+    sidebarBeeHivePackageAnalysis.refresh();
+  }
   );
 };
