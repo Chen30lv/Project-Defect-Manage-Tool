@@ -4,10 +4,16 @@ public interface UserConstant {
     /**
      * 用户登录态键
      */
-    String PERSON_LOGIN_STATE = "personLoginState";
+    String USER_LOGIN_STATE = "userLoginState";
+    //  region 权限
+
     /**
-     * 是否是管理员
+     * 默认角色
      */
-    int DEFAULT_ROLE = 0;
-    int ADMIN_ROLE = 1;
+    String DEFAULT_ROLE = "user";
+
+    /**
+     * 管理员角色
+     */
+    String ADMIN_ROLE = "admin";
 }
