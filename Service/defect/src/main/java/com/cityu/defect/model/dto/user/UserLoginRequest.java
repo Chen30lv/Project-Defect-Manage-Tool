@@ -1,4 +1,4 @@
-package com.cityu.defect.model.dto.person;
+package com.cityu.defect.model.dto.user;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 登录请求体
  */
 @Data
-public class PersonLoginRequest implements Serializable {
+public class UserLoginRequest implements Serializable {
 
     private static final long serialVersionUID = 3191241716373120793L;
     private String account;

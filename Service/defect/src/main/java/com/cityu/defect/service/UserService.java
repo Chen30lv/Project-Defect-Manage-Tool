@@ -1,10 +1,10 @@
 package com.cityu.defect.service;
 
-import com.cityu.defect.model.entity.Person;
+import com.cityu.defect.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface PersonService {
+public interface UserService {
     /**
      * 用户注册
      * @param account 用户账户
@@ -12,7 +12,7 @@ public interface PersonService {
      * @param checkPassword 校验密码
      * @return 新用户id
      */
-    long personRegister(String account, String password, String checkPassword);
+    long userRegister(String account, String password, String checkPassword);
 
     /**
      * 用户登录
@@ -21,12 +21,12 @@ public interface PersonService {
      * @param request
      * @return 脱敏后的用户信息
      */
-    Person personLogin(String account, String password, HttpServletRequest request);
+    User userLogin(String account, String password, HttpServletRequest request);
 
     /**
      * 用户脱敏
-     * @param person
+     * @param user
      * @return
      */
-    Person getSaftyPerson(Person person);
+    User getSaftyPerson(User user);
 }
