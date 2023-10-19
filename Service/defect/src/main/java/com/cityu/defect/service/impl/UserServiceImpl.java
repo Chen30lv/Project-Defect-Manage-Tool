@@ -1,10 +1,10 @@
 package com.cityu.defect.service.impl;
 
 import com.cityu.defect.common.ErrorCode;
-import com.cityu.defect.model.entity.Person;
+import com.cityu.defect.model.entity.User;
 import com.cityu.defect.exception.BusinessException;
-import com.cityu.defect.repository.PersonRepositoryJPA;
-import com.cityu.defect.service.PersonService;
+import com.cityu.defect.repository.UserRepositoryJPA;
+import com.cityu.defect.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
@@ -15,18 +15,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.regex.Pattern;
-import static com.cityu.defect.constant.PersonConstant.PERSON_LOGIN_STATE;
+import static com.cityu.defect.constant.UserConstant.PERSON_LOGIN_STATE;
 @Service
 @Slf4j
-public class PersonServiceImpl implements PersonService {
+public class UserServiceImpl implements UserService {
     @Resource
-    private PersonRepositoryJPA personRepositoryJPA;
+    private UserRepositoryJPA userRepositoryJPA;
     /**
      * 盐值：混淆密码
      */
     private static final String SALT = "DEFECT";
     @Override
-    public long personRegister(String account, String password, String checkPassword) {
+    public long userRegister(String account, String password, String checkPassword) {
         //1. 校验
         // 非空
         if (account.isEmpty() || password.isEmpty() || checkPassword.isEmpty()) {
@@ -49,27 +49,27 @@ public class PersonServiceImpl implements PersonService {
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码和校验密码相同");
         }
         //账户不能重复 (查询了数据库，这个校验应该放到最后校验)
-        var personList = personRepositoryJPA.findByAccount(account);
-        if(!personList.isEmpty()){
+        var userList = userRepositoryJPA.findByAccount(account);
+        if(!userList.isEmpty()){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号已注册");
         }
         //2.加密
         String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
         //3. 插入数据
-        Person person = new Person();
-        person.setAccount(account);
-        person.setPassword(md5Password);
-        person.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        personRepositoryJPA.save(person);//保存Person成功后，会把id塞给Person
+        User user = new User();
+        user.setAccount(account);
+        user.setPassword(md5Password);
+        user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        userRepositoryJPA.save(user);//保存Person成功后，会把id塞给Person
         //TODO: 插入失败判断
 //        if(result){
 //            throw new BusinessException(ErrorCode.SYSTEM_EXCEPTION,"注册失败");
 //        }
-        return person.getId();
+        return user.getId();
     }
 
     @Override
-    public Person personLogin(String account, String password, HttpServletRequest request) {
+    public User userLogin(String account, String password, HttpServletRequest request) {
         //1. 校验
         // 非空
         if (StringUtils.isAnyBlank(account,password)) {
@@ -85,27 +85,27 @@ public class PersonServiceImpl implements PersonService {
         //2.加密
         String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
         //查询用户是否存在
-        var personList = personRepositoryJPA.findByAccount(account);
-        if (personList.isEmpty()) {
-            log.info("person login failed, account doesn't exist");
+        var userList = userRepositoryJPA.findByAccount(account);
+        if (userList.isEmpty()) {
+            log.info("user login failed, account doesn't exist");
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号不正确");
         }
-        if(!personList.get(0).getPassword().equals(md5Password)){
-            log.info("person login failed, password is wrong");
+        if(!userList.get(0).getPassword().equals(md5Password)){
+            log.info("user login failed, password is wrong");
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码不正确");
         }
         //3.用户脱敏
-        Person safetyPerson = getSaftyPerson(personList.get(0));
+        User safetyUser = getSaftyPerson(userList.get(0));
         //4.记录用户的登录态
-        request.getSession().setAttribute(PERSON_LOGIN_STATE,safetyPerson);
-        return safetyPerson;
+        request.getSession().setAttribute(PERSON_LOGIN_STATE, safetyUser);
+        return safetyUser;
     }
 
     @Override
-    public Person getSaftyPerson(Person person) {
-        Person saftyPerson = new Person();
-        saftyPerson.setCreateTime(person.getCreateTime());
-        saftyPerson.setAccount(person.getAccount());
+    public User getSaftyPerson(User user) {
+        User saftyUser = new User();
+        saftyUser.setCreateTime(user.getCreateTime());
+        saftyUser.setAccount(user.getAccount());
         return null;
     }
 

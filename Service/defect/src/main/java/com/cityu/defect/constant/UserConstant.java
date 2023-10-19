@@ -1,6 +1,6 @@
 package com.cityu.defect.constant;
 
-public interface PersonConstant {
+public interface UserConstant {
     /**
      * 用户登录态键
      */
