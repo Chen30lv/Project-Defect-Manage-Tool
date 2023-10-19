@@ -27,7 +27,7 @@ public class DefectInfo implements Serializable {
     /**
      * 缺陷状态 New Open Fixed Reopened Deffered Duplicate Not a bug ....
      */
-    private int defectStatus;
+    private String defectStatus;
 
     /**
      * 缺陷详情

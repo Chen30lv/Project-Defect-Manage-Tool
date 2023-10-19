@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.cityu.defect.model.entity.DefectInfo">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="defectName" column="defectName" jdbcType="VARCHAR"/>
-        <result property="defectStatus" column="defectStatus" jdbcType="TINYINT"/>
+        <result property="defectStatus" column="defectStatus" jdbcType="VARCHAR"/>
         <result property="defectDetail" column="defectDetail" jdbcType="VARCHAR"/>
         <result property="defectType" column="defectType" jdbcType="VARCHAR"/>
         <result property="defectLevel" column="defectLevel" jdbcType="VARCHAR"/>
