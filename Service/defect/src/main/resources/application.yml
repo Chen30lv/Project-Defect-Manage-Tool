@@ -4,11 +4,6 @@ spring:
     url: jdbc:mysql://localhost:3306/DEFECT?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
     username: root
     password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    open-in-view: true
   # 支持 swagger3
   mvc:
     pathmatch:
@@ -18,6 +13,13 @@ server:
   port: 8101
   servlet:
     context-path: /api
-logging:
-  level:
-    org.springframework.orm.jpa: DEBUG
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）

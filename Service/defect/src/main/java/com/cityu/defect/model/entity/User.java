@@ -1,10 +1,13 @@
 package com.cityu.defect.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -14,40 +17,38 @@ import java.sql.Timestamp;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Data
-@Table(name = "USER")
+@TableName(value = "user")
 public class User implements Serializable {
 
-    @Id
-    @Column(name = "user_id",columnDefinition = "bigint(20) COMMENT '用户id'",nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 账户
      */
-    @Column(name="user_account",nullable = false,columnDefinition = "varchar(32) COMMENT '账户名称'")
     private String account;
 
     /**
      * 密码
      */
-    @Column(name="password",nullable = false,columnDefinition = "varchar(32) COMMENT '账户密码'")
     private String password;
+
+    /**
+     * 用户角色（user/admin）
+     */
+    private String role;
 
     /**
      * 用户创建时间
      */
-    @Column(name = "create_time", updatable = false, nullable = false)
     private Timestamp createTime;
 
-    public User(String account, String password, Timestamp createTime) {
-        super();
-        this.account = account;
-        this.password = password;
-        this.createTime = createTime;
-    }
+    /**
+     * 用户更新时间
+     */
+    private Timestamp updateTime;
 
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

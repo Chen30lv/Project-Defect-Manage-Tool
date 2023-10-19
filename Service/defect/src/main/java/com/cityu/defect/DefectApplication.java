@@ -1,11 +1,11 @@
 package com.cityu.defect;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@MapperScan("com.cityu.defect.mapper")
 public class DefectApplication {
 
     public static void main(String[] args) {
