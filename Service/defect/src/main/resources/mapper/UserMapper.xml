@@ -5,6 +5,8 @@
 <mapper namespace="com.cityu.defect.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.cityu.defect.model.entity.User">
         <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="role" column="role" jdbcType="VARCHAR"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>

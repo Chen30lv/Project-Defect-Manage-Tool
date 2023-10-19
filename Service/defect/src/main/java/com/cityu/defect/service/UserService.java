@@ -1,6 +1,8 @@
 package com.cityu.defect.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cityu.defect.model.dto.user.UserQueryRequest;
 import com.cityu.defect.model.entity.User;
 import com.cityu.defect.model.vo.UserVO;
 
@@ -39,14 +41,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     User getLoginUser(HttpServletRequest request);
-
     /**
-     * 获取当前登录用户（允许未登录）
+     * 获取脱敏的已登录用户信息
      *
-     * @param request
      * @return
      */
-    User getLoginUserPermitNull(HttpServletRequest request);
+    UserVO getLoginUserVO(User user);
 
     /**
      * 是否为管理员
@@ -78,4 +78,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<UserVO> getUserVO(List<User> userList);
+    /**
+     * 获取查询条件
+     *
+     * @param userQueryRequest
+     * @return
+     */
+    List<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 }
