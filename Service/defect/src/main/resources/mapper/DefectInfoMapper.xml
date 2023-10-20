@@ -10,7 +10,8 @@
         <result property="defectDetail" column="defectDetail" jdbcType="VARCHAR"/>
         <result property="defectType" column="defectType" jdbcType="VARCHAR"/>
         <result property="defectLevel" column="defectLevel" jdbcType="VARCHAR"/>
-        <result property="defectOwner" column="defectOwner" jdbcType="VARCHAR"/>
+        <result property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="projectId" column="projectId" jdbcType="BIGINT"/>
         <result property="defectComment" column="defectComment" jdbcType="VARCHAR"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
@@ -18,7 +19,11 @@
 
     <sql id="Base_Column_List">
         id,defectName,defectStatus,defectDetail,
-          defectType,defectLevel,defectOwner,
+          defectType,defectLevel,userId,projectId,
           defectComment,createTime,updateTime
     </sql>
+    <select id="selectByUserId"
+            resultType="com.cityu.defect.model.entity.DefectInfo">
+        select * from defect_info d where d.userId = #{userId}
+    </select>
 </mapper>

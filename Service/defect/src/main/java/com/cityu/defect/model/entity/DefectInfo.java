@@ -25,7 +25,7 @@ public class DefectInfo implements Serializable {
     private String defectName;
 
     /**
-     * 缺陷状态 New Open Fixed Reopened Deffered Duplicate Not a bug ....
+     * 缺陷状态
      */
     private String defectStatus;
 
@@ -35,19 +35,24 @@ public class DefectInfo implements Serializable {
     private String defectDetail;
 
     /**
-     * 缺陷类型 功能未实现-1 通用异常未处理-2 界面优化-3 安全相关-4 性能问题-5 兼容性-6
+     * 缺陷类型
      */
     private String defectType;
 
     /**
-     * 缺陷等级 Low-1 Medium-2 High-3 Critical-4
+     * 缺陷等级
      */
     private String defectLevel;
 
     /**
-     * 缺陷所有者 多人用，连接
+     * 缺陷所有者 userid列表
      */
-    private String defectOwner;
+    private Long userId;
+
+    /**
+     * 缺陷对应项目
+     */
+    private Long projectId;
 
     /**
      * 缺陷注释 长文本类型
