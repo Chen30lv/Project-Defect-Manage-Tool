@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -49,17 +50,28 @@ public class DefectInfoController {
         return ResultUtils.success(result);
     }
 
-//    @ApiOperation("条件查询缺陷列表")
-//    @PostMapping("/search")
-//    public BaseResponse<List<DefectInfoVO>> searchDefectInfoVO(@RequestBody DefectInfoQueryRequest defectInfoQueryRequest, HttpServletRequest request){
-//        defectInfoService.getQueryWrapper(defectInfoQueryRequest);
-//    }
+    @ApiOperation("已登录用户条件查询缺陷列表")
+    @PostMapping("/search")
+    public BaseResponse<List<DefectInfoVO>> searchDefectInfoVO(@RequestBody DefectInfoQueryRequest defectInfoQueryRequest, HttpServletRequest request){
+        User loginUser = userService.getLoginUser(request);
+        //用户未登录
+        if(loginUser == null){
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        Long loginUserId = loginUser.getId();
+        //登录用户不能请求其他用户的缺陷列表
+        if(!Objects.equals(loginUserId, defectInfoQueryRequest.getUserId())){
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        List<DefectInfo> defectInfoList = defectInfoService.getQueryWrapper(defectInfoQueryRequest);
+        return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoList));
+    }
 
     /**
      * 获取当前用户的缺陷列表
      */
-    @ApiOperation("取当前登录用户的缺陷列表")
-    @PostMapping("/my/defectInfoList/vo")
+    @ApiOperation("获取当前登录用户全部缺陷列表")
+    @PostMapping("/search/MyDefectInfoVOList")
     public BaseResponse<List<DefectInfoVO>> listMyDefectInfoVO(HttpServletRequest request) {
         if (request == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

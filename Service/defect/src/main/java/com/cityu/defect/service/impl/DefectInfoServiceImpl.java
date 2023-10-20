@@ -37,10 +37,10 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     @Resource
     private DefectInfoMapper defectInfoMapper;
     @Override
-    public QueryWrapper<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest) {
+    public List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest) {
         QueryWrapper<DefectInfo> queryWrapper = new QueryWrapper<>();
         if (defectInfoQueryRequest == null) {
-            return queryWrapper;
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
         }
         Long id = defectInfoQueryRequest.getId();
         String defectName = defectInfoQueryRequest.getDefectName();
@@ -61,7 +61,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         queryWrapper.ne(ObjectUtils.isNotEmpty(projectId), "projectId", projectId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
-        return queryWrapper;
+        return defectInfoMapper.selectList(queryWrapper);
     }
     @Override
     public void validDefectInfo(DefectInfo defectInfo) {
