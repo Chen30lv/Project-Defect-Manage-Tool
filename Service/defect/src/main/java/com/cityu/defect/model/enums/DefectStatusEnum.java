@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public enum DefectStatusEnum {
 
-    UNFINISHED("未完成", "unfinished"),
+    TODO("待处理", "todo"),
     FINISHED("完成", "finished");
 
     private final String text;

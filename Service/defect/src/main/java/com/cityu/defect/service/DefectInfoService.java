@@ -13,7 +13,7 @@ public interface DefectInfoService extends IService<DefectInfo> {
     /**
      * 获取查询条件
      */
-    QueryWrapper<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest);
+    List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest);
     /**
      * 校验
      */

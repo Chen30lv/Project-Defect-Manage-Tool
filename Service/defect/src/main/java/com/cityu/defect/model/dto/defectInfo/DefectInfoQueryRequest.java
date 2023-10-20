@@ -2,6 +2,7 @@ package com.cityu.defect.model.dto.defectInfo;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class DefectInfoQueryRequest implements Serializable {
     /**
      * 缺陷所有者userid
      */
+    @NotNull
     private Long userId;
     /**
      * 缺陷所属项目project id
