@@ -16,6 +16,9 @@ import java.sql.Timestamp;
 @TableName(value = "defect_info")
 public class DefectInfo implements Serializable {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
     @TableId(type = IdType.AUTO)
     private Long id;
 
@@ -28,6 +31,11 @@ public class DefectInfo implements Serializable {
      * 缺陷状态
      */
     private String defectStatus;
+
+    /**
+     * 是否完成
+     */
+    private String isToDo;
 
     /**
      * 缺陷详情
@@ -70,6 +78,5 @@ public class DefectInfo implements Serializable {
      */
     private Timestamp updateTime;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+
 }

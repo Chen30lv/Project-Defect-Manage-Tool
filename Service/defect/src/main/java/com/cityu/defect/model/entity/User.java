@@ -21,6 +21,9 @@ import java.sql.Timestamp;
 @TableName(value = "user")
 public class User implements Serializable {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -35,11 +38,6 @@ public class User implements Serializable {
     private String password;
 
     /**
-     * 用户角色（user/admin）
-     */
-    private String role;
-
-    /**
      * 用户创建时间
      */
     private Timestamp createTime;
@@ -49,6 +47,5 @@ public class User implements Serializable {
      */
     private Timestamp updateTime;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+
 }

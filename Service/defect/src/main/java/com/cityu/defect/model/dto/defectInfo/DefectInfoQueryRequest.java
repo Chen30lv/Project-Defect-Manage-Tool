@@ -11,6 +11,9 @@ import java.util.List;
  */
 @Data
 public class DefectInfoQueryRequest implements Serializable {
+
+
+    private static final long serialVersionUID = 1L;
     /**
      * id
      */
@@ -56,5 +59,9 @@ public class DefectInfoQueryRequest implements Serializable {
      */
     private String defectComment;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 缺陷是否已完成
+     */
+    private String isToDo;
+
 }

@@ -5,10 +5,10 @@
 <mapper namespace="com.cityu.defect.mapper.ProjectMapper">
     <resultMap id="BaseResultMap" type="com.cityu.defect.model.entity.Project">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="projectName" column="projectName" jdbcType="VARCHAR"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,projectName
+        id,project_name
     </sql>
 </mapper>

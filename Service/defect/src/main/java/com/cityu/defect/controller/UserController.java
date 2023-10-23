@@ -29,21 +29,23 @@ import com.cityu.defect.exception.ThrowUtils;
 public class UserController {
     @Resource
     private UserService userService;
-    @ApiOperation("注册")
-    @PostMapping("/register")
-    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
-        if (userRegisterRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数为空");
-        }
-        String account = userRegisterRequest.getAccount();
-        String password = userRegisterRequest.getPassword();
-        String checkPassword = userRegisterRequest.getCheckPassword();
-        if (StringUtils.isAnyBlank(account,password,checkPassword)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
-        }
-        long result = userService.userRegister(account, password, checkPassword);
-        return ResultUtils.success(result);
-    }
+
+
+//    @ApiOperation("注册")
+//    @PostMapping("/register")
+//    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+//        if (userRegisterRequest == null) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数为空");
+//        }
+//        String account = userRegisterRequest.getAccount();
+//        String password = userRegisterRequest.getPassword();
+//        String checkPassword = userRegisterRequest.getCheckPassword();
+//        if (StringUtils.isAnyBlank(account,password,checkPassword)) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
+//        }
+//        long result = userService.userRegister(account, password, checkPassword);
+//        return ResultUtils.success(result);
+//    }
 
     @ApiOperation("登录")
     @PostMapping("/login")
@@ -104,49 +106,49 @@ public class UserController {
     }
 
     //TODO：更新密码
-    @ApiOperation("更新用户")
-    @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest,
-                                            HttpServletRequest request) {
-        if (userUpdateRequest == null || userUpdateRequest.getId() == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User user = new User();
-        BeanUtils.copyProperties(userUpdateRequest, user);
-        boolean result = userService.updateById(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.success(true);
-    }
+//    @ApiOperation("更新用户")
+//    @PostMapping("/update")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public BaseResponse<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest,
+//                                            HttpServletRequest request) {
+//        if (userUpdateRequest == null || userUpdateRequest.getId() == null) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        User user = new User();
+//        BeanUtils.copyProperties(userUpdateRequest, user);
+//        boolean result = userService.updateById(user);
+//        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+//        return ResultUtils.success(true);
+//    }
 
-    @ApiOperation("根据 id 获取用户（仅管理员）")
-    @GetMapping("/get")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<User> getUserById(long id, HttpServletRequest request) {
-        if (id <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User user = userService.getById(id);
-        ThrowUtils.throwIf(user == null, ErrorCode.NOT_FOUND_ERROR);
-        return ResultUtils.success(user);
-    }
+//    @ApiOperation("根据 id 获取用户（仅管理员）")
+//    @GetMapping("/get")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public BaseResponse<User> getUserById(long id, HttpServletRequest request) {
+//        if (id <= 0) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        User user = userService.getById(id);
+//        ThrowUtils.throwIf(user == null, ErrorCode.NOT_FOUND_ERROR);
+//        return ResultUtils.success(user);
+//    }
+//
+//    @ApiOperation("根据 id 获取脱敏用户")
+//    @GetMapping("/get/vo")
+//    public BaseResponse<UserVO> getUserVOById(long id, HttpServletRequest request) {
+//        BaseResponse<User> response = getUserById(id, request);
+//        User user = response.getData();
+//        return ResultUtils.success(userService.getUserVO(user));
+//    }
 
-    @ApiOperation("根据 id 获取脱敏用户")
-    @GetMapping("/get/vo")
-    public BaseResponse<UserVO> getUserVOById(long id, HttpServletRequest request) {
-        BaseResponse<User> response = getUserById(id, request);
-        User user = response.getData();
-        return ResultUtils.success(userService.getUserVO(user));
-    }
-
-    @ApiOperation("获取未脱敏用户列表（仅管理员）")
-    @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<List<User>> listUserByPage(@RequestBody UserQueryRequest userQueryRequest,
-                                                   HttpServletRequest request) {
-        List<User> userList = userService.getQueryWrapper(userQueryRequest);
-        return ResultUtils.success(userList);
-    }
+//    @ApiOperation("获取未脱敏用户列表（仅管理员）")
+//    @PostMapping("/list/page")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public BaseResponse<List<User>> listUserByPage(@RequestBody UserQueryRequest userQueryRequest,
+//                                                   HttpServletRequest request) {
+//        List<User> userList = userService.getQueryWrapper(userQueryRequest);
+//        return ResultUtils.success(userList);
+//    }
 
 
 }

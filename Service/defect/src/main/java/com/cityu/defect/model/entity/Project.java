@@ -16,6 +16,9 @@ import java.io.Serializable;
 @TableName(value = "project")
 public class Project implements Serializable {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -24,6 +27,5 @@ public class Project implements Serializable {
      */
     private String projectName;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+
 }

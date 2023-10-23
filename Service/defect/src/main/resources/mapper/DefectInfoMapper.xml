@@ -5,25 +5,25 @@
 <mapper namespace="com.cityu.defect.mapper.DefectInfoMapper">
     <resultMap id="BaseResultMap" type="com.cityu.defect.model.entity.DefectInfo">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="defectName" column="defectName" jdbcType="VARCHAR"/>
-        <result property="defectStatus" column="defectStatus" jdbcType="VARCHAR"/>
-        <result property="defectDetail" column="defectDetail" jdbcType="VARCHAR"/>
-        <result property="defectType" column="defectType" jdbcType="VARCHAR"/>
-        <result property="defectLevel" column="defectLevel" jdbcType="VARCHAR"/>
-        <result property="userId" column="userId" jdbcType="BIGINT"/>
-        <result property="projectId" column="projectId" jdbcType="BIGINT"/>
-        <result property="defectComment" column="defectComment" jdbcType="VARCHAR"/>
-        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="defectName" column="defect_name" jdbcType="VARCHAR"/>
+        <result property="defectStatus" column="defect_status" jdbcType="VARCHAR"/>
+        <result property="isToDo" column="is_to_do" jdbcType="VARCHAR"/>
+        <result property="defectDetail" column="defect_detail" jdbcType="VARCHAR"/>
+        <result property="defectType" column="defect_type" jdbcType="VARCHAR"/>
+        <result property="defectLevel" column="defect_level" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="projectId" column="project_id" jdbcType="BIGINT"/>
+        <result property="defectComment" column="defect_comment" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,defectName,defectStatus,defectDetail,
-          defectType,defectLevel,userId,projectId,
-          defectComment,createTime,updateTime
+        id,defect_name,defect_status,is_to_do,defect_detail,defect_type,defect_level,
+            user_id,project_id,defect_comment,create_time,update_time
     </sql>
     <select id="selectByUserId"
             resultType="com.cityu.defect.model.entity.DefectInfo">
-        select * from defect_info d where d.userId = #{userId}
+        select * from defect_info d where d.user_id = #{0}
     </select>
 </mapper>

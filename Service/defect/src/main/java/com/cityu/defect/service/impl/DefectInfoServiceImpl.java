@@ -48,14 +48,16 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         String defectDetail = defectInfoQueryRequest.getDefectDetail();
         String defectType = defectInfoQueryRequest.getDefectType();
         String defectLevel = defectInfoQueryRequest.getDefectLevel();
+        String isToDo = defectInfoQueryRequest.getIsToDo();
         Long userId = defectInfoQueryRequest.getUserId();
         Long projectId = defectInfoQueryRequest.getProjectId();
         String defectComment = defectInfoQueryRequest.getDefectComment();
-        // 拼接查询条件
+        // 拼接查询条件 todo 字典翻译 例如：前端传1，字典翻译成solved
         queryWrapper.like(StringUtils.isNotBlank(defectName), "defectName", defectName);
         queryWrapper.like(StringUtils.isNotBlank(defectStatus), "defectStatus", defectStatus);
         queryWrapper.like(StringUtils.isNotBlank(defectDetail), "defectDetail", defectDetail);
         queryWrapper.like(StringUtils.isNotBlank(defectType), "defectType", defectType);
+        queryWrapper.like(StringUtils.isNotBlank(isToDo), "isToDo", isToDo);
         queryWrapper.like(StringUtils.isNotBlank(defectLevel), "defectLevel", defectLevel);
         queryWrapper.like(StringUtils.isNotBlank(defectComment), "defectComment", defectComment);
         queryWrapper.ne(ObjectUtils.isNotEmpty(projectId), "projectId", projectId);
