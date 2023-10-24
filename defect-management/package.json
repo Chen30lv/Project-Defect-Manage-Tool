@@ -17,23 +17,16 @@
         {
           "id": "defect-management-sidebar",
           "title": "Defect manegement",
-          "icon": "media/QueueList.svg"
+          "icon": "media/dep.svg"
         }
       ]
     },
     "views": {
       "defect-management-sidebar": [
         {
-          "id": "DM-General",
-          "name": "Todo"
-        },
-        {
-          "id": "DM-PackAnalysis",
-          "name": "Finish"
-        },
-        {
-          "id": "DM-Count",
-          "name": "Count"
+          "id": "dashboard",
+          "name": "Dashboard",
+          "icon": "media/dep.svg"
         }
       ]
     },
@@ -45,37 +38,12 @@
     ],
     "commands": [
       {
-        "command": "defect-management.showSidebar",
-        "title": "Show Sidebar",
-        "icon": "media/QueueList.svg"
-      },
-      {
-        "command": "DM-General.list",
+        "command": "dashboard.list",
         "title": "list",
-        "icon": "media/list.svg"
+        "icon": "media/filter.svg"
       },
       {
-        "command": "DM-General.refresh",
-        "title": "refresh",
-        "icon": "media/refresh.svg"
-      },
-      {
-        "command": "DM-PackAnalysis.list",
-        "title": "list",
-        "icon": "media/list.svg"
-      },
-      {
-        "command": "DM-PackAnalysis.refresh",
-        "title": "refresh",
-        "icon": "media/refresh.svg"
-      },
-      {
-        "command": "DM-Count.list",
-        "title": "list",
-        "icon": "media/list.svg"
-      },
-      {
-        "command": "DM-Count.refresh",
+        "command": "dashboard.refresh",
         "title": "refresh",
         "icon": "media/refresh.svg"
       }
@@ -83,33 +51,13 @@
     "menus": {
       "view/title": [
         {
-          "command": "DM-General.list",
-          "when": "view == DM-General",
+          "command": "dashboard.list",
+          "when": "view == dashboard",
           "group": "navigation"
         },
         {
-          "command": "DM-General.refresh",
-          "when": "view == DM-General",
-          "group": "navigation"
-        },
-        {
-          "command": "DM-PackAnalysis.list",
-          "when": "view == DM-PackAnalysis",
-          "group": "navigation"
-        },
-        {
-          "command": "DM-PackAnalysis.refresh",
-          "when": "view == DM-PackAnalysis",
-          "group": "navigation"
-        },
-        {
-          "command": "DM-Count.list",
-          "when": "view == DM-Count",
-          "group": "navigation"
-        },
-        {
-          "command": "DM-Count.refresh",
-          "when": "view == DM-Count",
+          "command": "dashboard.refresh",
+          "when": "view == dashboard",
           "group": "navigation"
         }
       ]
