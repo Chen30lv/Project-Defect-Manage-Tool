@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
 	//require('./sidebar')(context);
 	//require('./views/count')(context);
 	require('./views/dashboard')(context);
-	require('./views/list')(context);
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
