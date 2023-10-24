@@ -7,12 +7,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cityu.defect.common.ErrorCode;
 import com.cityu.defect.exception.BusinessException;
 import com.cityu.defect.mapper.DefectInfoMapper;
+import com.cityu.defect.mapper.ProjectMapper;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoQueryRequest;
+import com.cityu.defect.model.dto.statisticInfo.StatisticQueryRequest;
 import com.cityu.defect.model.entity.DefectInfo;
 import com.cityu.defect.model.enums.DefectLevelEnum;
 import com.cityu.defect.model.enums.DefectStatusEnum;
 import com.cityu.defect.model.enums.DefectTypeEnum;
 import com.cityu.defect.model.vo.DefectInfoVO;
+import com.cityu.defect.model.vo.StatisticVO;
 import com.cityu.defect.service.DefectInfoService;
 import com.cityu.defect.service.ProjectService;
 import com.cityu.defect.service.UserService;
@@ -36,6 +39,9 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     private ProjectService projectService;
     @Resource
     private DefectInfoMapper defectInfoMapper;
+    @Resource
+    private ProjectMapper projectMapper;
+
     @Override
     public List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest) {
         QueryWrapper<DefectInfo> queryWrapper = new QueryWrapper<>();
@@ -113,5 +119,29 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
             defectInfoVOList.add(defectInfoVO);
         }
         return defectInfoVOList;
+    }
+
+    @Override
+    public List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest){
+
+        List<StatisticVO> statisticVOList = new ArrayList<>();
+        if (statisticQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
+        }
+        String key = statisticQueryRequest.getKey();
+        Long userId = statisticQueryRequest.getUserId();
+        Map<Long, String> projectNameMap = projectMapper.selectAllProject();
+        List<StatisticVO> results = defectInfoMapper.listCount(userId, key);
+        //赋值
+        if(!CollectionUtils.isEmpty(results)){
+            for(StatisticVO s : results){
+                String title = projectNameMap.get(s.getTitle());
+                if(StringUtils.isNotEmpty(title)){
+                    s.setTitle(title);
+                }
+            }
+        }
+        return results;
+
     }
 }

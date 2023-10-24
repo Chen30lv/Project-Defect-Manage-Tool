@@ -26,4 +26,14 @@
             resultType="com.cityu.defect.model.entity.DefectInfo">
         select * from defect_info d where d.user_id = #{0}
     </select>
+
+    <select id="listCount" resultType="com.cityu.defect.model.vo.StatisticVO">
+        select
+            #{1}, count(*) as num
+        from defect_info d
+        where d.user_id = #{0}
+        group by #{1}
+    </select>
+
+
 </mapper>
