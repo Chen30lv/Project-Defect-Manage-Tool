@@ -11,8 +11,4 @@
     <sql id="Base_Column_List">
         id, project_name
     </sql>
-
-    <select id="selectAllProject" resultType="Map">
-        select * from project d;
-    </select>
 </mapper>

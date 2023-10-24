@@ -5,8 +5,6 @@ import com.cityu.defect.common.ErrorCode;
 import com.cityu.defect.common.ResultUtils;
 import com.cityu.defect.exception.BusinessException;
 import com.cityu.defect.model.dto.statisticInfo.StatisticQueryRequest;
-import com.cityu.defect.model.entity.DefectInfo;
-import com.cityu.defect.model.entity.Project;
 import com.cityu.defect.model.entity.User;
 import com.cityu.defect.model.vo.StatisticVO;
 import com.cityu.defect.service.DefectInfoService;

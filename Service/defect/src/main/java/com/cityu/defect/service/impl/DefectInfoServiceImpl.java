@@ -11,6 +11,7 @@ import com.cityu.defect.mapper.ProjectMapper;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoQueryRequest;
 import com.cityu.defect.model.dto.statisticInfo.StatisticQueryRequest;
 import com.cityu.defect.model.entity.DefectInfo;
+import com.cityu.defect.model.entity.Project;
 import com.cityu.defect.model.enums.DefectLevelEnum;
 import com.cityu.defect.model.enums.DefectStatusEnum;
 import com.cityu.defect.model.enums.DefectTypeEnum;
@@ -39,8 +40,6 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     private ProjectService projectService;
     @Resource
     private DefectInfoMapper defectInfoMapper;
-    @Resource
-    private ProjectMapper projectMapper;
 
     @Override
     public List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest) {
@@ -130,17 +129,8 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         }
         String key = statisticQueryRequest.getKey();
         Long userId = statisticQueryRequest.getUserId();
-        Map<Long, String> projectNameMap = projectMapper.selectAllProject();
-        List<StatisticVO> results = defectInfoMapper.listCount(userId, key);
-        //赋值
-        if(!CollectionUtils.isEmpty(results)){
-            for(StatisticVO s : results){
-                String title = projectNameMap.get(s.getTitle());
-                if(StringUtils.isNotEmpty(title)){
-                    s.setTitle(title);
-                }
-            }
-        }
+
+        List<StatisticVO> results = defectInfoMapper.listCountByProject(userId);
         return results;
 
     }

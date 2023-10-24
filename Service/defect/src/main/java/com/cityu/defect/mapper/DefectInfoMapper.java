@@ -11,5 +11,5 @@ import java.util.List;
 public interface DefectInfoMapper extends BaseMapper<DefectInfo> {
     List<DefectInfo> selectByUserId(Long userId);
 
-    List<StatisticVO> listCount(Long userId, String key);
+    List<StatisticVO> listCountByProject(Long userId);
 }

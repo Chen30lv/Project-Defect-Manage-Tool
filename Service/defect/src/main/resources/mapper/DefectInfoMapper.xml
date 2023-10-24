@@ -27,12 +27,12 @@
         select * from defect_info d where d.user_id = #{0}
     </select>
 
-    <select id="listCount" resultType="com.cityu.defect.model.vo.StatisticVO">
+    <select id="listCountByProject" resultType="com.cityu.defect.model.vo.StatisticVO">
         select
-            #{1}, count(*) as num
-        from defect_info d
+            p.project_name as title, count(*) as num
+        from project p join defect_info d on p.id = d.project_id
         where d.user_id = #{0}
-        group by #{1}
+        group by project_name
     </select>
 
 
