@@ -12,4 +12,12 @@ public interface DefectInfoMapper extends BaseMapper<DefectInfo> {
     List<DefectInfo> selectByUserId(Long userId);
 
     List<StatisticVO> listCountByProject(Long userId);
+
+    List<StatisticVO> listCountByType(Long userId);
+
+    List<StatisticVO> listCountByLevel(Long userId);
+
+    List<StatisticVO> listCountByIsToDo(Long userId);
+
+
 }

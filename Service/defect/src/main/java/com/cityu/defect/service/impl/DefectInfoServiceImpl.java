@@ -130,8 +130,23 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         String key = statisticQueryRequest.getKey();
         Long userId = statisticQueryRequest.getUserId();
 
-        List<StatisticVO> results = defectInfoMapper.listCountByProject(userId);
-        return results;
+        switch(key){
+            case "project":
+                statisticVOList = defectInfoMapper.listCountByProject(userId);
+                break;
+            case "type":
+                statisticVOList = defectInfoMapper.listCountByType(userId);
+                break;
+            case "level":
+                statisticVOList = defectInfoMapper.listCountByLevel(userId);
+                break;
+            case "todo":
+                statisticVOList = defectInfoMapper.listCountByIsToDo(userId);
+                break;
+            default:
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "invalid key");
+        }
+        return statisticVOList;
 
     }
 }

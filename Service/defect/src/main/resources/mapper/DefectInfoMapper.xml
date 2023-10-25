@@ -28,11 +28,28 @@
     </select>
 
     <select id="listCountByProject" resultType="com.cityu.defect.model.vo.StatisticVO">
-        select
-            p.project_name as title, count(*) as num
+        select p.project_name as title, count(*) as num
         from project p join defect_info d on p.id = d.project_id
         where d.user_id = #{0}
         group by project_name
+    </select>
+    <select id="listCountByType" resultType="com.cityu.defect.model.vo.StatisticVO">
+        select d.defect_type as title, count(*) as num
+        from defect_info d
+        where d.user_id = #{0}
+        group by d.defect_type
+    </select>
+    <select id="listCountByIsToDo" resultType="com.cityu.defect.model.vo.StatisticVO">
+        select d.is_to_do as title, count(*) as num
+        from defect_info d
+        where d.user_id = #{0}
+        group by d.is_to_do
+    </select>
+    <select id="listCountByLevel" resultType="com.cityu.defect.model.vo.StatisticVO">
+        select d.defect_level as title, count(*) as num
+        from defect_info d
+        where d.user_id = #{0}
+        group by d.defect_level
     </select>
 
 
