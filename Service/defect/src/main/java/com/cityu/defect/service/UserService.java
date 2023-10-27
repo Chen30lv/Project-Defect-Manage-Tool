@@ -85,4 +85,5 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+    long addUser(String account, String password);
 }
