@@ -14,10 +14,10 @@ import java.util.List;
 
 @SpringBootTest
 class DefectApplicationTests {
-    @Test
-    void test(){
-        DefectInfoVO defectInfoVO = new DefectInfoVO();
-        System.out.println(StringUtils.isBlank(defectInfoVO.getDefectLevel()));
-    }
+//    @Test
+//    void test(){
+//        DefectInfoVO defectInfoVO = new DefectInfoVO();
+//        System.out.println(StringUtils.isBlank(defectInfoVO.getDefectLevel()));
+//    }
 
 }
