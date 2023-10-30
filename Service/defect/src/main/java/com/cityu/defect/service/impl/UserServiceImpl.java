@@ -34,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 盐值：混淆密码
      */
-    private static final String SALT = "DEFECT";
+//    private static final String SALT = "DEFECT";
     @Resource
     private UserMapper userMapper;
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号已注册");
         }
         //2.加密
-        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
         //3. 插入数据
         User user = new User();
         user.setAccount(account);
@@ -90,14 +90,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
         }
         //长度
-        if (account.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
-        }
+//        if (account.length() < 4) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
+//        }
         if(password.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码错误");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度小于8");
         }
         //加密
-        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
         //查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", account);
@@ -176,7 +176,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<UserVO> getUserVO(List<User> userList) {
+    public List<UserVO> getUserVOList(List<User> userList) {
         if (CollectionUtils.isEmpty(userList)) {
             return new ArrayList<>();
         }
@@ -197,37 +197,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectList(queryWrapper);
     }
 
-    @Transactional
-    @Override
-    public long addUser(String account, String password) {
-        //1. 校验
-        // 非空
-        if (account.isEmpty() || password.isEmpty() ) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
-        }
-        //长度
-        if (account.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号长度过短");
-        }
-        if(password.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度过短");
-        }
-        //账户不能包含特殊字符
-        String pattern = ".*[*?!&￥$%^#,./@\";:><\\]\\[}{\\-=+_\\\\|》《。，、？’‘“”~`）].*$";
-        if(Pattern.matches(pattern, account)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号不能包含特殊字符");
-        }
-        //2.加密
-        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
-        //3. 插入数据
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(md5Password);
-        user.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        boolean saveResult = this.save(user);
-        if (!saveResult) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
-        }
-        return user.getId();
-    }
 }

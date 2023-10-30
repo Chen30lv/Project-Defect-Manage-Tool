@@ -6,9 +6,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum DefectStatusEnum {
-
-    TODO("待处理", "todo"),
-    FINISHED("完成", "finished");
+    /**
+     * defectStatus
+     * 1-Open 2-Fixed 3-Pending Retest 4-ReOpened
+     * 5-Closed 6-Deffered 7-NotABug 8-Duplicate
+     */
+    OPEN("Open", "Open"),
+    FIXED("Fixed", "Fixed"),
+    PENDING_RETEST("Pending Retest", "Pending Retest"),
+    REOPENED("ReOpened", "ReOpened"),
+    CLOSED("Closed", "Closed"),
+    DEFFERED("Deffered", "Deffered"),
+    NOT_A_BUG("NotABug", "NotABug"),
+    DUPLICATE("Duplicate", "Duplicate");
 
     private final String text;
 

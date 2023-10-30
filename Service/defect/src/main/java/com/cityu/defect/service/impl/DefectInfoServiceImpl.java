@@ -123,12 +123,12 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     @Override
     public List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest){
 
-        List<StatisticVO> statisticVOList = new ArrayList<>();
         if (statisticQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
         }
         String key = statisticQueryRequest.getKey();
         Long userId = statisticQueryRequest.getUserId();
+        List<StatisticVO> statisticVOList;
 
         switch(key){
             case "project":

@@ -31,21 +31,21 @@ public class UserController {
     private UserService userService;
 
 
-//    @ApiOperation("注册")
-//    @PostMapping("/register")
-//    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
-//        if (userRegisterRequest == null) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数为空");
-//        }
-//        String account = userRegisterRequest.getAccount();
-//        String password = userRegisterRequest.getPassword();
-//        String checkPassword = userRegisterRequest.getCheckPassword();
-//        if (StringUtils.isAnyBlank(account,password,checkPassword)) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
-//        }
-//        long result = userService.userRegister(account, password, checkPassword);
-//        return ResultUtils.success(result);
-//    }
+    @ApiOperation("注册/添加用户")
+    @PostMapping("/register")
+    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+        if (userRegisterRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数为空");
+        }
+        String account = userRegisterRequest.getAccount();
+        String password = userRegisterRequest.getPassword();
+        String checkPassword = userRegisterRequest.getCheckPassword();
+        if (StringUtils.isAnyBlank(account,password,checkPassword)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
+        }
+        long result = userService.userRegister(account, password, checkPassword);
+        return ResultUtils.success(result);
+    }
 
     @ApiOperation("登录")
     @PostMapping("/login")
@@ -79,22 +79,7 @@ public class UserController {
         return ResultUtils.success(userService.getLoginUserVO(user));
     }
 
-    @ApiOperation("创建用户")
-    @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Long> addUser(@RequestBody UserAddRequest userAddRequest, HttpServletRequest request) {
-        if (userAddRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User user = new User();
-        //TODO userAddRequest无密码，需要测试
-        BeanUtils.copyProperties(userAddRequest, user);
-        boolean result = userService.save(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.success(user.getId());
-    }
-
-    @ApiOperation("删除用户")
+    @ApiOperation("删除用(仅限管理员)）")
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
