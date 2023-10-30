@@ -10,7 +10,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/DEFECT?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
     username: root
-    password: 123456
+    password: wycWYC123! # 服务器端mysql密码,打包前使用这一条
+#    password: 123456
 
   # 支持 swagger3
   mvc:
