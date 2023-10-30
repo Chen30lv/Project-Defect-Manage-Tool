@@ -13,6 +13,7 @@ import com.cityu.defect.model.vo.DefectInfoVO;
 import com.cityu.defect.service.DefectInfoService;
 import com.cityu.defect.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;

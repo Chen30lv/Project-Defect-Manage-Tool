@@ -18,10 +18,10 @@ public class UserVO implements Serializable {
      */
     private String account;
 
-    /**
-     * 用户角色（user/admin）
-     */
-    private String role;
+//    /**
+//     * 用户角色（user/admin）
+//     */
+//    private String role;
 
     /**
      * 用户创建时间
