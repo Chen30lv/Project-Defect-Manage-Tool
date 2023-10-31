@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 public enum DefectLevelEnum {
     /**
-     * defectLevel Low-1 Medium-2 High-3 Critical-4
+     * defectLevel
      */
-    LOW("低级别", "low"),
-    MEDIUM("中级别", "medium"),
-    HIGH("高级别","high"),
-    CRITICAL("严重级别","critical");
+    LOW("Low", "Low"),
+    MEDIUM("Medium", "Medium"),
+    HIGH("High","High"),
+    CRITICAL("Critical","Critical");
 
 
 

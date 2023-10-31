@@ -7,14 +7,17 @@ import java.util.stream.Collectors;
 
 public enum DefectTypeEnum {
     /**
-     * defectType 功能未实现-1 通用异常未处理-2 界面优化-3 安全相关-4 性能问题-5 兼容性-6
+     * defectType 1-Functional Defect 2-Logical Defect
+     * 3-Workflow Defect
+     * 4-Unit Level Defect 5-System-level Integration Defect
+     * 6-Security Defect
      */
-    FUNCTION_ISSUE("功能未实现", "function_issue"),
-    EXCEPTION_ISSUE("通用异常未处理", "exception_issue"),
-    UI_ISSUE("界面优化","ui_issue"),
-    SECURITY_ISSUE("安全相关","security_issue"),
-    PERFORMANCE_ISSUE("性能问题","performance_issue"),
-    COMPATIBILITY_ISSUE("兼容性","compatibility_issue");
+    FUNCTIONAL_DEFECT("Functional Defect", "Functional Defect"),
+    LOGICAL_DEFECT("Logical Defect", "Logical Defect"),
+    WORKFLOW_DEFECT("Workflow Defect","Workflow Defect"),
+    UNIT_LEVEL_DEFECT("Unit Level Defect","Unit Level Defect"),
+    SYSTEM_LEVEL_INTEGRATION_DEFECT("System-level Integration Defect","System-level Integration Defect"),
+    SECURITY_DEFECT("Security Defect","Security Defect");
 
 
 

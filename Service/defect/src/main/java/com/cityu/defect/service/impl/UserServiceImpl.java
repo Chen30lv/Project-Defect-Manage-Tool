@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
@@ -33,7 +34,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 盐值：混淆密码
      */
-    private static final String SALT = "DEFECT";
+//    private static final String SALT = "DEFECT";
     @Resource
     private UserMapper userMapper;
     @Override
@@ -68,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号已注册");
         }
         //2.加密
-        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
         //3. 插入数据
         User user = new User();
         user.setAccount(account);
@@ -89,14 +90,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
         }
         //长度
-        if (account.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
-        }
+//        if (account.length() < 4) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
+//        }
         if(password.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码错误");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度小于8");
         }
         //加密
-        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
         //查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", account);
@@ -175,7 +176,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<UserVO> getUserVO(List<User> userList) {
+    public List<UserVO> getUserVOList(List<User> userList) {
         if (CollectionUtils.isEmpty(userList)) {
             return new ArrayList<>();
         }
@@ -195,4 +196,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq(StringUtils.isNotBlank(role), "role", role);
         return userMapper.selectList(queryWrapper);
     }
+
 }

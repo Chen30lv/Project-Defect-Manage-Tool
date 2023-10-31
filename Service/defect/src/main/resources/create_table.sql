@@ -5,7 +5,6 @@ create database if not exists DEFECT;
 
 -- 切换库
 use DEFECT;
-
 -- 用户表
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
@@ -18,10 +17,17 @@ CREATE TABLE user (
 
 LOCK TABLES user WRITE;
 INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (1, 'DING', 123456, '2023-10-22 16:41:44', '2023-10-22 16:41:44');
-
+VALUES (1, 'dy', md5("12345678"), '2023-10-22 16:41:44', '2023-10-22 16:41:44');
 INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (2, 'WANG', 123456, '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+VALUES (2, 'wyc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+INSERT INTO user (id, account, password, create_time, update_time)
+VALUES (3, 'wjh', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+INSERT INTO user (id, account, password, create_time, update_time)
+VALUES (4, 'lgc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+INSERT INTO user (id, account, password, create_time, update_time)
+VALUES (5, 'ljy', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+INSERT INTO user (id, account, password, create_time, update_time)
+VALUES (6, 'hyg', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
 UNLOCK TABLES;
 
 

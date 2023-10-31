@@ -57,17 +57,16 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         Long userId = defectInfoQueryRequest.getUserId();
         Long projectId = defectInfoQueryRequest.getProjectId();
         String defectComment = defectInfoQueryRequest.getDefectComment();
-        // 拼接查询条件 todo 字典翻译 例如：前端传1，字典翻译成solved
-        queryWrapper.like(StringUtils.isNotBlank(defectName), "defectName", defectName);
-        queryWrapper.like(StringUtils.isNotBlank(defectStatus), "defectStatus", defectStatus);
-        queryWrapper.like(StringUtils.isNotBlank(defectDetail), "defectDetail", defectDetail);
-        queryWrapper.like(StringUtils.isNotBlank(defectType), "defectType", defectType);
-        queryWrapper.like(StringUtils.isNotBlank(isToDo), "isToDo", isToDo);
-        queryWrapper.like(StringUtils.isNotBlank(defectLevel), "defectLevel", defectLevel);
-        queryWrapper.like(StringUtils.isNotBlank(defectComment), "defectComment", defectComment);
-        queryWrapper.ne(ObjectUtils.isNotEmpty(projectId), "projectId", projectId);
+        queryWrapper.like(StringUtils.isNotBlank(defectName), "defect_name", defectName);
+        queryWrapper.like(StringUtils.isNotBlank(defectStatus), "defect_status", defectStatus);
+        queryWrapper.like(StringUtils.isNotBlank(defectDetail), "defect_detail", defectDetail);
+        queryWrapper.like(StringUtils.isNotBlank(defectType), "defect_type", defectType);
+        queryWrapper.like(StringUtils.isNotBlank(isToDo), "is_to_do", isToDo);
+        queryWrapper.like(StringUtils.isNotBlank(defectLevel), "defect_level", defectLevel);
+        queryWrapper.like(StringUtils.isNotBlank(defectComment), "defect_comment", defectComment);
+        queryWrapper.ne(ObjectUtils.isNotEmpty(projectId), "project_id", projectId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "user_id", userId);
         return defectInfoMapper.selectList(queryWrapper);
     }
     @Override
@@ -123,12 +122,12 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     @Override
     public List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest){
 
-        List<StatisticVO> statisticVOList = new ArrayList<>();
         if (statisticQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
         }
         String key = statisticQueryRequest.getKey();
         Long userId = statisticQueryRequest.getUserId();
+        List<StatisticVO> statisticVOList;
 
         switch(key){
             case "project":

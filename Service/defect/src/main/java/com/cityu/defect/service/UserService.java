@@ -77,7 +77,7 @@ public interface UserService extends IService<User> {
      * @param userList
      * @return
      */
-    List<UserVO> getUserVO(List<User> userList);
+    List<UserVO> getUserVOList(List<User> userList);
     /**
      * 获取查询条件
      *
