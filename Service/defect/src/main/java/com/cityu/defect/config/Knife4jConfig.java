@@ -24,8 +24,8 @@ public class Knife4jConfig {
 
     @Bean(value = "defaultApi2")
     public Docket defaultApi2() {
-        String groupName="2.X版本";
-        Docket docket=new Docket(DocumentationType.OAS_30)
+        String groupName="defect-tool";
+        Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .groupName(groupName)
                 .select()
@@ -47,10 +47,11 @@ public class Knife4jConfig {
 //    public Docket defaultApi2() {
 //        return new Docket(DocumentationType.SWAGGER_2)
 //                .apiInfo(new ApiInfoBuilder()
-//                        .title("接口文档")
+//                        .title("defect-tool RESTful APIs")
 //                        .description("defect-tool")
-//                        .version("1.0")
+//                        .version("2.0")
 //                        .build())
+//                .groupName("defect_tool")
 //                .select()
 //                // 指定 Controller 扫描包路径
 //                .apis(RequestHandlerSelectors.basePackage("com.cityu.defect.controller"))
