@@ -85,7 +85,7 @@ module.exports = function (context: vscode.ExtensionContext) {
   // Register Sidebar Panels
   const sidebarTodo = new SideBarGeneric('dashboard.openChild');
   
-
+  
   vscode.window.registerTreeDataProvider('dashboard', sidebarTodo);
   
   vscode.commands.registerCommand('dashboard.refresh', () => {

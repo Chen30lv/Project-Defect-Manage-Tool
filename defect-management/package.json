@@ -46,6 +46,11 @@
         "command": "dashboard.refresh",
         "title": "refresh",
         "icon": "media/refresh.svg"
+      },
+      {
+        "command": "dashboard.submit",
+        "title": "submit",
+        "icon": "media/submit.svg"
       }
     ],
     "menus": {
@@ -59,6 +64,11 @@
           "command": "dashboard.refresh",
           "when": "view == dashboard",
           "group": "navigation"
+        },
+        {
+        "command": "dashboard.submit",
+        "when": "view == dashboard",
+        "group": "navigation"
         }
       ]
     }

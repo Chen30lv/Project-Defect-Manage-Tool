@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 	//require('./views/count')(context);
 	require('./views/dashboard')(context);
 	require('./views/list')(context);
+	require('./views/submit')(context);
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
