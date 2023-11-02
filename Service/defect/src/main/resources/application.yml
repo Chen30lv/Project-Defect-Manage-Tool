@@ -1,14 +1,40 @@
 spring:
+  sql:
+    init:
+      encoding: utf-8
+      mode: always
+      platform: mysql
+      schema-locations:
+        - classpath:create_table.sql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/DEFECT?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
     username: root
-    password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    open-in-view: true
-logging:
-  level:
-    org.springframework.orm.jpa: DEBUG
+    password: wycWYC123! # 服务器端mysql密码,打包前使用这一条
+#    password: 123456
+
+  # 支持 swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  address: 0.0.0.0
+  port: 8101
+  servlet:
+    context-path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+knife4j:
+  enable: true
+  documents:
+    -
+      group: defect_tool
+      name: InputStandard
+      locations: classpath:markdown/*.md
