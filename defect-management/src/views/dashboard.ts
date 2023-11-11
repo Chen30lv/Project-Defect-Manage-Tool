@@ -1,4 +1,27 @@
 import * as vscode from 'vscode';
+import axios, { AxiosInstance } from 'axios';
+import { GlobalState } from '../utils/globalState';
+
+async function postData(context: vscode.ExtensionContext): Promise<void> {
+	try {
+	  const httpClient = axios.create({
+      baseURL: 'http://134.175.54.235:8101', // 设置你的baseURL
+      withCredentials: true,
+    });
+  
+	  // 使用httpClient进行POST请求
+	  const response = await httpClient.post('/api/defectInfo/search/MyDefectInfoVOList?userId=1', {
+		// 你的POST数据
+	  });
+  
+	  console.log('Response:', response.data);
+      GlobalState.defectInfoArray = response.data.data;
+      console.log(GlobalState.defectInfoArray);
+
+	} catch (error) {
+	  console.error('Error during data posting:', error);
+	}
+  }
 
 export const defects = [
   {
@@ -48,9 +71,9 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
     if (element) {
       // Child nodes
       var childrenList = []
-      for (let index = 0; index < defects.length; index++) {
+      for (let index = 0; index < GlobalState.defectInfoArray.length; index++) {
         var item = new SideBarEntryItem(
-          defects[index].defect,
+          GlobalState.defectInfoArray[index].defectName,
           vscode.TreeItemCollapsibleState.None
         )
         item.command = {
@@ -88,7 +111,15 @@ module.exports = function (context: vscode.ExtensionContext) {
   
   vscode.window.registerTreeDataProvider('dashboard', sidebarTodo);
   
-  vscode.commands.registerCommand('dashboard.refresh', () => {
+  vscode.commands.registerCommand('dashboard.refresh', async () => {
+    console.log("Start posting");
+    await postData(context);
     sidebarTodo.refresh();
   });
+
+  // let disposable = vscode.commands.registerCommand('dashboard.refresh', async () => {
+  //   console.log("Start posting");
+  //   sidebarTodo.refresh();
+  // });
+  // context.subscriptions.push(disposable);
 };
