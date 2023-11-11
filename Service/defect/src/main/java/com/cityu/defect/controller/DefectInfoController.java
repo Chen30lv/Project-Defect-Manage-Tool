@@ -60,7 +60,7 @@ public class DefectInfoController {
         }
         //需要传递userId
         if(defectInfoQueryRequest.getUserId()==null){
-            throw new BusinessException(40001,"Your request have to contain your userId");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"Your request have to contain your userId");
         }
         Long loginUserId = loginUser.getId();
         //登录用户不能请求其他用户的缺陷列表
