@@ -53,20 +53,20 @@ public class DefectInfoController {
     @ApiOperation("已登录用户条件查询缺陷列表")
     @PostMapping("/search")
     public BaseResponse<List<DefectInfoVO>> searchDefectInfoVO(@RequestBody DefectInfoQueryRequest defectInfoQueryRequest, HttpServletRequest request){
-        User loginUser = userService.getLoginUser(request);
-        //用户未登录
-        if(loginUser == null){
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
+//        User loginUser = userService.getLoginUser(request);
+//        //用户未登录
+//        if(loginUser == null){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
         //需要传递userId
         if(defectInfoQueryRequest.getUserId()==null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"Your request have to contain your userId");
         }
-        Long loginUserId = loginUser.getId();
-        //登录用户不能请求其他用户的缺陷列表
-        if(!Objects.equals(loginUserId, defectInfoQueryRequest.getUserId())){
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
+//        Long loginUserId = loginUser.getId();
+//        //登录用户不能请求其他用户的缺陷列表
+//        if(!Objects.equals(loginUserId, defectInfoQueryRequest.getUserId())){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
         List<DefectInfo> defectInfoList = defectInfoService.getQueryWrapper(defectInfoQueryRequest);
         return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoList));
     }
@@ -76,16 +76,16 @@ public class DefectInfoController {
      */
     @ApiOperation("获取当前登录用户全部缺陷列表")
     @PostMapping("/search/MyDefectInfoVOList")
-    public BaseResponse<List<DefectInfoVO>> listMyDefectInfoVO(HttpServletRequest request) {
-        if (request == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User loginUser = userService.getLoginUser(request);
-        if(loginUser == null){
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
-        Long loginUserId = loginUser.getId();
-        List<DefectInfo> defectInfoVOList = defectInfoService.findByUserId(loginUserId);
+    public BaseResponse<List<DefectInfoVO>> listMyDefectInfoVO(Long userId,HttpServletRequest request) {
+//        if (request == null) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        User loginUser = userService.getLoginUser(request);
+//        if(loginUser == null){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
+//        Long loginUserId = loginUser.getId();
+        List<DefectInfo> defectInfoVOList = defectInfoService.findByUserId(userId);
         return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoVOList));
     }
 }
