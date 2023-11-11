@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { GlobalState } from '../utils/globalState';
 
 export const defects = [
   {
@@ -17,6 +18,11 @@ export const defects = [
     defect: 'defect 5',
   }
 ];
+
+const defect2 = GlobalState.defectInfoArray;
+console.log("Defects:")
+console.log(GlobalState.defectInfoArray)
+console.log(defect2)
 
 // Custom Tree Item Class
 export class SideBarEntryItem extends vscode.TreeItem {
@@ -47,6 +53,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
   getChildren(element?: SideBarEntryItem): vscode.ProviderResult<SideBarEntryItem[]> {
     if (element) {
       // Child nodes
+      console.log(element.label);
       var childrenList = []
       for (let index = 0; index < defects.length; index++) {
         var item = new SideBarEntryItem(
@@ -84,7 +91,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
 module.exports = function (context: vscode.ExtensionContext) {
   // Register Sidebar Panels
   const sidebarTodo = new SideBarGeneric('dashboard.openChild');
-  
+  context.globalState.update('sidebarTodo', sidebarTodo);
   
   vscode.window.registerTreeDataProvider('dashboard', sidebarTodo);
   

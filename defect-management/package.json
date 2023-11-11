@@ -66,9 +66,9 @@
           "group": "navigation"
         },
         {
-        "command": "dashboard.submit",
-        "when": "view == dashboard",
-        "group": "navigation"
+          "command": "dashboard.submit",
+          "when": "view == dashboard",
+          "group": "navigation"
         }
       ]
     }
@@ -85,6 +85,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.199",
     "@types/mocha": "^10.0.2",
     "@types/node": "18.x",
@@ -102,6 +103,10 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "axios": "^1.6.1",
+    "axios-cookiejar-support": "^4.0.7",
+    "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
+    "tough-cookie": "^4.1.3"
   }
 }

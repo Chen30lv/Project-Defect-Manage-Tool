@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
 
+
+
+
 const scripts = [
   {
     script: 'webpack:dev',
@@ -42,6 +45,7 @@ export class SideBarBeeHiveCommand implements vscode.TreeDataProvider<SideBarEnt
   getChildren(element?: SideBarEntryItem): vscode.ProviderResult<SideBarEntryItem[]> {
     if (element) {
       // Children nodes
+      //postData();
       var childrenList = [];
       for (let index = 0; index < scripts.length; index++) {
         var item = new SideBarEntryItem('1.0.0', scripts[index].script, vscode.TreeItemCollapsibleState.None);
