@@ -2,16 +2,13 @@ package com.cityu.defect.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cityu.defect.common.ErrorCode;
 import com.cityu.defect.exception.BusinessException;
 import com.cityu.defect.mapper.DefectInfoMapper;
-import com.cityu.defect.mapper.ProjectMapper;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoQueryRequest;
 import com.cityu.defect.model.dto.statisticInfo.StatisticQueryRequest;
 import com.cityu.defect.model.entity.DefectInfo;
-import com.cityu.defect.model.entity.Project;
 import com.cityu.defect.model.enums.DefectLevelEnum;
 import com.cityu.defect.model.enums.DefectStatusEnum;
 import com.cityu.defect.model.enums.DefectTypeEnum;
@@ -27,9 +24,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
