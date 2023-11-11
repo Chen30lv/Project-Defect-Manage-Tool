@@ -47,6 +47,13 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         if (defectInfoQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
         }
+        //TODO 数据校验
+
+        DefectInfo defectInfo = new DefectInfo();
+        BeanUtils.copyProperties(defectInfoQueryRequest, defectInfo);
+
+        this.validDefectInfo(defectInfo);
+        //校验成功则进行查询
         Long id = defectInfoQueryRequest.getId();
         String defectName = defectInfoQueryRequest.getDefectName();
         String defectStatus = defectInfoQueryRequest.getDefectStatus();
@@ -57,6 +64,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         Long userId = defectInfoQueryRequest.getUserId();
         Long projectId = defectInfoQueryRequest.getProjectId();
         String defectComment = defectInfoQueryRequest.getDefectComment();
+
         queryWrapper.like(StringUtils.isNotBlank(defectName), "defect_name", defectName);
         queryWrapper.like(StringUtils.isNotBlank(defectStatus), "defect_status", defectStatus);
         queryWrapper.like(StringUtils.isNotBlank(defectDetail), "defect_detail", defectDetail);

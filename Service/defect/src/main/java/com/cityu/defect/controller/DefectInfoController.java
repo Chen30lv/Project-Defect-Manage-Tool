@@ -58,6 +58,10 @@ public class DefectInfoController {
         if(loginUser == null){
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
+        //需要传递userId
+        if(defectInfoQueryRequest.getUserId()==null){
+            throw new BusinessException(40001,"Your request have to contain your userId");
+        }
         Long loginUserId = loginUser.getId();
         //登录用户不能请求其他用户的缺陷列表
         if(!Objects.equals(loginUserId, defectInfoQueryRequest.getUserId())){
