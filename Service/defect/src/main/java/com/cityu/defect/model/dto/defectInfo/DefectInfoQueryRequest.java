@@ -75,7 +75,7 @@ public class DefectInfoQueryRequest implements Serializable {
     /**
      * 缺陷是否已完成
      */
-    @ApiModelProperty(value="isToDo",example="todo,finished")
+    @ApiModelProperty(value="isToDo",example="TODO,FINISHED")
     private String isToDo;
 
 }
