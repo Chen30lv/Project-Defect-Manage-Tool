@@ -68,16 +68,16 @@ INSERT INTO defect_info
 VALUES (2, 'not beautiful', 'Open', 'The software interface is really ugly', 'TODO', 'Unit Level Defect',
         'High', '2', '2', 'no comment', '2023-10-23 18:41:44','2023-10-23 18:41:44');
 INSERT INTO defect_info
-VALUES (3, 'diu lei', 'Fixed', 'lao mu', 'FINISH', 'Workflow Defect',
+VALUES (3, 'diu lei', 'Fixed', 'lao mu', 'FINISHED', 'Workflow Defect',
         'Critical', '2', '1', 'no comment', '2023-10-23 18:54:44','2023-10-23 18:54:44');
 INSERT INTO defect_info
 VALUES (4, 'TEST 4', 'ReOpened', 'TEST 4', 'TODO', 'Workflow Defect',
         'Critical', '1', '2', 'no comment', '2023-10-23 18:54:50','2023-10-23 18:54:50');
 INSERT INTO defect_info
-VALUES (5, 'TEST 5', 'Deffered', 'TEST 5', 'FINISH', 'System-level Integration Defect',
+VALUES (5, 'TEST 5', 'Deffered', 'TEST 5', 'FINISHED', 'System-level Integration Defect',
         'High', '2', '2', 'no comment', '2023-10-23 18:54:51','2023-10-23 18:54:51');
 INSERT INTO defect_info
-VALUES (6, 'TEST 6', 'NotABug', 'TEST 6', 'FINISH', 'Functional Defect',
+VALUES (6, 'TEST 6', 'NotABug', 'TEST 6', 'FINISHED', 'Functional Defect',
         'Medium', '2', '1', 'no comment', '2023-10-23 18:54:52','2023-10-23 18:54:52');
 INSERT INTO defect_info
 VALUES (7, 'TEST 7', 'Open', 'TEST 7', 'TODO', 'Functional Defect',

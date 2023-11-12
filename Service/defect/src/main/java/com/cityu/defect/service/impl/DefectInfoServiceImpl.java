@@ -11,6 +11,7 @@ import com.cityu.defect.model.dto.statisticInfo.StatisticQueryRequest;
 import com.cityu.defect.model.entity.DefectInfo;
 import com.cityu.defect.model.enums.DefectLevelEnum;
 import com.cityu.defect.model.enums.DefectStatusEnum;
+import com.cityu.defect.model.enums.DefectToDoEnum;
 import com.cityu.defect.model.enums.DefectTypeEnum;
 import com.cityu.defect.model.vo.DefectInfoVO;
 import com.cityu.defect.model.vo.StatisticVO;
@@ -80,6 +81,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         String defectStatus = defectInfo.getDefectStatus();
         String defectType = defectInfo.getDefectType();
         String defectLevel = defectInfo.getDefectLevel();
+        String isToDo = defectInfo.getIsToDo();
         Long userId = defectInfo.getUserId();
         Long projectId = defectInfo.getProjectId();
 
@@ -91,6 +93,9 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         }
         if(StringUtils.isNotBlank(defectStatus) && DefectStatusEnum.getEnumByValue(defectStatus) == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
+        }
+        if(StringUtils.isNotBlank(isToDo) && DefectToDoEnum.getEnumByValue(isToDo) == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "isToDo不符合规范");
         }
         if (userId != null && userService.getById(userId) == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "user不存在");

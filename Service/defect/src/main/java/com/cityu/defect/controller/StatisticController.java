@@ -34,16 +34,16 @@ public class StatisticController {
     public BaseResponse<List<StatisticVO>> list(@RequestBody StatisticQueryRequest statisticQueryRequest
             , HttpServletRequest request) {
 
-        User loginUser = userService.getLoginUser(request);
-        //用户未登录
-        if(loginUser == null){
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
-        Long loginUserId = loginUser.getId();
-        //登录用户不能请求其他用户的统计信息
-        if(!Objects.equals(loginUserId, statisticQueryRequest.getUserId())){
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
+//        User loginUser = userService.getLoginUser(request);
+//        //用户未登录
+//        if(loginUser == null){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
+//        Long loginUserId = loginUser.getId();
+//        //登录用户不能请求其他用户的统计信息
+//        if(!Objects.equals(loginUserId, statisticQueryRequest.getUserId())){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
 
         List<StatisticVO> defectInfoList = defectInfoService.listStatistic(statisticQueryRequest);
         return ResultUtils.success(defectInfoList);

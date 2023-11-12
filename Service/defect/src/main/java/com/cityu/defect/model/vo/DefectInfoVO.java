@@ -28,6 +28,8 @@ public class DefectInfoVO implements Serializable {
 
     private String defectLevel;
 
+    private String isToDo;
+
     private Long userId;
 
     private Long projectId;
