@@ -56,6 +56,24 @@ public enum DefectStatusEnum {
         return null;
     }
 
+    public static DefectStatusEnum getEnumByValueUpdate(String value) {
+        if (ObjectUtils.isEmpty(value)) {
+            return null;
+        }
+        if(value.equals(DefectStatusEnum.FIXED.value)){
+            return DefectStatusEnum.FIXED;
+        }
+        if(value.equals(DefectStatusEnum.DEFFERED.value)){
+            return DefectStatusEnum.DEFFERED;
+        }
+        if(value.equals(DefectStatusEnum.DUPLICATE.value)){
+            return DefectStatusEnum.DUPLICATE;
+        }
+        if(value.equals(DefectStatusEnum.NOT_A_BUG.value)){
+            return DefectStatusEnum.NOT_A_BUG;
+        }
+        return null;
+    }
     public String getValue() {
         return value;
     }

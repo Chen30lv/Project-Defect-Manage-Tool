@@ -8,7 +8,6 @@ import com.cityu.defect.exception.ThrowUtils;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoQueryRequest;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoUpdateRequest;
 import com.cityu.defect.model.entity.DefectInfo;
-import com.cityu.defect.model.entity.User;
 import com.cityu.defect.model.vo.DefectInfoVO;
 import com.cityu.defect.service.DefectInfoService;
 import com.cityu.defect.service.UserService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Objects;
 
 
 @RestController
@@ -46,7 +44,7 @@ public class DefectInfoController {
         // 判断是否存在
         DefectInfo oldDefectInfo = defectInfoService.getById(id);
         ThrowUtils.throwIf(oldDefectInfo == null, ErrorCode.NOT_FOUND_ERROR);
-        boolean result = defectInfoService.updateById(defectInfo);
+        boolean result = defectInfoService.UpdateDefectInfo(defectInfo);
         return ResultUtils.success(result);
     }
 
