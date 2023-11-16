@@ -155,4 +155,25 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         return statisticVOList;
 
     }
+
+    @Override
+    public Boolean UpdateDefectInfo(DefectInfo defectInfo) {
+        DefectInfo oldDefectInfo = this.getById(defectInfo.getId());
+        String defectStatus = defectInfo.getDefectStatus();
+        String defectComment = defectInfo.getDefectComment();
+        String defectCommentOld = oldDefectInfo.getDefectComment();
+        if(StringUtils.isNotBlank(defectStatus) && DefectStatusEnum.getEnumByValueUpdate(defectStatus) == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
+        }
+        if(StringUtils.isNotBlank(defectCommentOld) && StringUtils.isNotBlank(defectComment)){
+            oldDefectInfo.setDefectComment(defectCommentOld.concat(" => ").concat(defectComment));
+        }
+        if(StringUtils.isBlank(defectCommentOld) && StringUtils.isNotBlank(defectComment)){
+            oldDefectInfo.setDefectComment(defectComment);
+        }
+        if(StringUtils.isNotBlank(defectStatus)){
+            oldDefectInfo.setDefectStatus(defectStatus);
+        }
+        return this.updateById(oldDefectInfo);
+    }
 }

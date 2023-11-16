@@ -36,4 +36,10 @@ public interface DefectInfoService extends IService<DefectInfo> {
      */
     List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest);
 
+    /**
+     * 更改部分缺陷
+     * @param defectInfo
+     * @return
+     */
+    Boolean UpdateDefectInfo(DefectInfo defectInfo);
 }
