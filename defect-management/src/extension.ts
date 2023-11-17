@@ -25,6 +25,17 @@ export function activate(context: vscode.ExtensionContext) {
             
         })
     );
+	context.subscriptions.push(
+	vscode.commands.registerCommand('dashboard.showContextMenu', () => {
+		// Handle the context menu logic using the item information
+		// You can access item.defectName, item.defectStatus, etc.
+		// Implement your context menu functionality here
+		console.log("asd");
+		// Show a context menu
+		vscode.window.showInformationMessage(`Context menu for: 123`);
+	})
+	)
+	
 }
 
 // This method is called when your extension is deactivated

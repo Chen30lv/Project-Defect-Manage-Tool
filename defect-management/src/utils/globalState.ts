@@ -21,6 +21,7 @@ interface UserVO {
     defectDetail: string;
     defectType: string;
     defectLevel: string;
+    isToDo : string;
     userId: number;
     projectId: number;
     defectComment: string;

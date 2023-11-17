@@ -51,6 +51,10 @@
         "command": "dashboard.submit",
         "title": "submit",
         "icon": "media/submit.svg"
+      },
+      {
+        "command": "dashboard.showContextMenu",
+        "title": "showContextMenu"
       }
     ],
     "menus": {
@@ -69,6 +73,13 @@
         "command": "dashboard.submit",
         "when": "view == dashboard",
         "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "dashboard.showContextMenu",
+          "when": "view == dashboard",
+          "group": "1_sidebar"
         }
       ]
     }
