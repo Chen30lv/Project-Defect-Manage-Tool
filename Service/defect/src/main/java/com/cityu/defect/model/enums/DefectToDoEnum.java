@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public enum DefectToDoEnum {
 
     TODO("TODO", "TODO"),
-    FINISH("FINISHED", "FINISHED");
+    FINISHED("FINISHED", "FINISHED");
 
     private final String text;
 

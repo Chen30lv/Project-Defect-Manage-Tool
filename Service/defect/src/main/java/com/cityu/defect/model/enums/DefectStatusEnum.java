@@ -9,14 +9,14 @@ public enum DefectStatusEnum {
     /**
      * defectStatus
      * 1-Open 2-Fixed 3-Pending Retest 4-ReOpened
-     * 5-Closed 6-Deffered 7-NotABug 8-Duplicate
+     * 5-Closed 6-Deferred 7-NotABug 8-Duplicate
      */
     OPEN("Open", "Open"),
     FIXED("Fixed", "Fixed"),
     PENDING_RETEST("Pending Retest", "Pending Retest"),
     REOPENED("ReOpened", "ReOpened"),
     CLOSED("Closed", "Closed"),
-    DEFFERED("Deffered", "Deffered"),
+    DEFERRED("Deferred", "Deferred"),
     NOT_A_BUG("NotABug", "NotABug"),
     DUPLICATE("Duplicate", "Duplicate");
 
@@ -63,8 +63,8 @@ public enum DefectStatusEnum {
         if(value.equals(DefectStatusEnum.FIXED.value)){
             return DefectStatusEnum.FIXED;
         }
-        if(value.equals(DefectStatusEnum.DEFFERED.value)){
-            return DefectStatusEnum.DEFFERED;
+        if(value.equals(DefectStatusEnum.DEFERRED.value)){
+            return DefectStatusEnum.DEFERRED;
         }
         if(value.equals(DefectStatusEnum.DUPLICATE.value)){
             return DefectStatusEnum.DUPLICATE;

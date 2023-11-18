@@ -21,7 +21,7 @@ public class DefectInfoUpdateRequest implements Serializable {
     /**
      * 缺陷状态
      */
-    @ApiModelProperty(value="defectStatus",example="Fixed,Deffered,NotABug,Duplicate")
+    @ApiModelProperty(value="defectStatus",example="Fixed,Deferred,NotABug,Duplicate")
     private String defectStatus;
 
     /**
