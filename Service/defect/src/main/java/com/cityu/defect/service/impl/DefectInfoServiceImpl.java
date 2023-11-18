@@ -162,17 +162,21 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         String defectStatus = defectInfo.getDefectStatus();
         String defectComment = defectInfo.getDefectComment();
         String defectCommentOld = oldDefectInfo.getDefectComment();
-        if(StringUtils.isNotBlank(defectStatus) && DefectStatusEnum.getEnumByValueUpdate(defectStatus) == null){
+        DefectStatusEnum statusEnum = DefectStatusEnum.getEnumByValueUpdate(defectStatus);
+        if(StringUtils.isNotBlank(defectStatus) && statusEnum == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
+        }
+        else{
+            oldDefectInfo.setDefectStatus(defectStatus);
+            if(!statusEnum.equals(DefectStatusEnum.DEFERRED)){
+                oldDefectInfo.setIsToDo(DefectToDoEnum.FINISHED.getValue());
+            }
         }
         if(StringUtils.isNotBlank(defectCommentOld) && StringUtils.isNotBlank(defectComment)){
             oldDefectInfo.setDefectComment(defectCommentOld.concat(" => ").concat(defectComment));
         }
         if(StringUtils.isBlank(defectCommentOld) && StringUtils.isNotBlank(defectComment)){
             oldDefectInfo.setDefectComment(defectComment);
-        }
-        if(StringUtils.isNotBlank(defectStatus)){
-            oldDefectInfo.setDefectStatus(defectStatus);
         }
         return this.updateById(oldDefectInfo);
     }
