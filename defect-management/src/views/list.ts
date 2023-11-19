@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
-import {SideBarGeneric, SideBarEntryItem} from './dashboard';
+import {SideBarGeneric} from './dashboard';
 
-const dashboard = require('./dashboard');
 
 export const defects = [
     {
@@ -24,11 +23,11 @@ export const defects = [
 export class FindList{
     private defectTexts: string[];
     private selectedDefects: string[] = [];
-    private sidebarTodo: SideBarGeneric;
+    
 
     constructor() {
         this.defectTexts = defects.map(defect => defect.defect);
-        this.sidebarTodo = new SideBarGeneric('dashboard.openChild');
+        
     }
     list = vscode.commands.registerCommand('dashboard.list',  () => {
         vscode.window.showQuickPick(
@@ -48,9 +47,7 @@ export class FindList{
     getSelectedDefects() {
         return this.selectedDefects;
     }
-    getSidebarTodo() {
-        return this.sidebarTodo;
-    }
+    
     private showSelectedDefects(selectedDefects: string[] | undefined) {
         if (selectedDefects) {
           const message = `你选择的缺陷是: ${selectedDefects.join(', ')}`;
@@ -61,9 +58,5 @@ export class FindList{
 
 module.exports = function (context: vscode.ExtensionContext) {
     const findlist = new FindList();
-
-    vscode.commands.registerCommand('dashboard.list', () => {
-        findlist.list;
-    });
 
 };
