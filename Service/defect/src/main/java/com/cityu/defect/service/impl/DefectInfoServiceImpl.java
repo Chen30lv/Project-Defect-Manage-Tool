@@ -166,7 +166,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         if(StringUtils.isNotBlank(defectStatus) && statusEnum == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
         }
-        else{
+        else if(statusEnum != null){
             oldDefectInfo.setDefectStatus(defectStatus);
             if(!statusEnum.equals(DefectStatusEnum.DEFERRED)){
                 oldDefectInfo.setIsToDo(DefectToDoEnum.FINISHED.getValue());
