@@ -13,6 +13,7 @@ import com.cityu.defect.model.enums.DefectLevelEnum;
 import com.cityu.defect.model.enums.DefectStatusEnum;
 import com.cityu.defect.model.enums.DefectToDoEnum;
 import com.cityu.defect.model.enums.DefectTypeEnum;
+import com.cityu.defect.model.vo.DefectInfoProVO;
 import com.cityu.defect.model.vo.DefectInfoVO;
 import com.cityu.defect.model.vo.StatisticVO;
 import com.cityu.defect.service.DefectInfoService;
@@ -125,7 +126,22 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         }
         return defectInfoVOList;
     }
-
+    @Override
+    public List<DefectInfoProVO> getDefectInfoProVO(List<DefectInfo> defectInfoList) {
+        List<DefectInfoProVO> defectInfoProVOList = new ArrayList<>();
+        if (CollectionUtils.isEmpty(defectInfoList)) {
+            return defectInfoProVOList;
+        }
+        for(DefectInfo defectInfo : defectInfoList){
+            DefectInfoProVO defectInfoProVO = new DefectInfoProVO();
+            BeanUtils.copyProperties(defectInfo,defectInfoProVO);
+            defectInfoProVO.setDefectComment(defectInfo.getDefectComment().split(" => "));
+            defectInfoProVO.setProject(projectService.getById(defectInfo.getProjectId()));
+            defectInfoProVO.setUserVO(userService.getUserVO(userService.getById(defectInfo.getUserId())));
+            defectInfoProVOList.add(defectInfoProVO);
+        }
+        return defectInfoProVOList;
+    }
     @Override
     public List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest){
 

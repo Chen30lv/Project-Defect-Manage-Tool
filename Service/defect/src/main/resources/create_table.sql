@@ -63,7 +63,7 @@ CREATE TABLE defect_info(
 LOCK TABLES defect_info WRITE;
 INSERT INTO defect_info
 VALUES (1, 'not safe', 'Open', 'there are too many software vulnerabilities', 'TODO', 'Security Defect',
-        'Low', '1', '1', 'no comment', '2023-10-23 16:41:44','2023-10-23 16:41:44');
+        'Low', '1', '1', 'no comment => wow', '2023-10-23 16:41:44','2023-10-23 16:41:44');
 INSERT INTO defect_info
 VALUES (2, 'not beautiful', 'Open', 'The software interface is really ugly', 'TODO', 'Unit Level Defect',
         'High', '2', '2', 'no comment', '2023-10-23 18:41:44','2023-10-23 18:41:44');
