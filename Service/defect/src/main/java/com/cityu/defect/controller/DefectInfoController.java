@@ -8,6 +8,7 @@ import com.cityu.defect.exception.ThrowUtils;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoQueryRequest;
 import com.cityu.defect.model.dto.defectInfo.DefectInfoUpdateRequest;
 import com.cityu.defect.model.entity.DefectInfo;
+import com.cityu.defect.model.vo.DefectInfoProVO;
 import com.cityu.defect.model.vo.DefectInfoVO;
 import com.cityu.defect.service.DefectInfoService;
 import com.cityu.defect.service.UserService;
@@ -83,7 +84,25 @@ public class DefectInfoController {
 //            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
 //        }
 //        Long loginUserId = loginUser.getId();
-        List<DefectInfo> defectInfoVOList = defectInfoService.findByUserId(userId);
-        return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoVOList));
+        List<DefectInfo> defectInfoList = defectInfoService.findByUserId(userId);
+        return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoList));
+    }
+
+    /**
+     * 获取当前用户的缺陷列表
+     */
+    @ApiOperation("获取当前登录用户全部缺陷列表(json comments)")
+    @PostMapping("/search/MyDefectInfoProVOList")
+    public BaseResponse<List<DefectInfoProVO>> listMyDefectInfoProVO(Long userId, HttpServletRequest request) {
+//        if (request == null) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        User loginUser = userService.getLoginUser(request);
+//        if(loginUser == null){
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+//        }
+//        Long loginUserId = loginUser.getId();
+        List<DefectInfo> defectInfoList = defectInfoService.findByUserId(userId);
+        return ResultUtils.success(defectInfoService.getDefectInfoProVO(defectInfoList));
     }
 }
