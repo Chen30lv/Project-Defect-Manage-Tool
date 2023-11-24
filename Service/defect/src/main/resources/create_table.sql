@@ -20,14 +20,14 @@ INSERT INTO user (id, account, password, create_time, update_time)
 VALUES (1, 'dy', md5("12345678"), '2023-10-22 16:41:44', '2023-10-22 16:41:44');
 INSERT INTO user (id, account, password, create_time, update_time)
 VALUES (2, 'wyc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
-INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (3, 'wjh', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
-INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (4, 'lgc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
-INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (5, 'ljy', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
-INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (6, 'hyg', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+# INSERT INTO user (id, account, password, create_time, update_time)
+# VALUES (3, 'wjh', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+# INSERT INTO user (id, account, password, create_time, update_time)
+# VALUES (4, 'lgc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+# INSERT INTO user (id, account, password, create_time, update_time)
+# VALUES (5, 'ljy', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
+# INSERT INTO user (id, account, password, create_time, update_time)
+# VALUES (6, 'hyg', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
 UNLOCK TABLES;
 
 
@@ -39,8 +39,11 @@ CREATE TABLE project(
 ) comment '项目' collate = utf8mb4_unicode_ci;
 
 LOCK TABLES project WRITE;
-INSERT INTO project (id, project_name) VALUES (1, 'SOFTWARE ENGINEERING');
-INSERT INTO project (id, project_name) VALUES (2, 'DATA ENGINEERING');
+INSERT INTO project (id, project_name) VALUES (1, 'Search Engine');
+INSERT INTO project (id, project_name) VALUES (2, 'Shopping Mall');
+INSERT INTO project (id, project_name) VALUES (3, 'Deliver System');
+INSERT INTO project (id, project_name) VALUES (4, 'VSCode Plugin');
+INSERT INTO project (id, project_name) VALUES (5, 'Chat Room');
 UNLOCK TABLES;
 
 -- 缺陷表
@@ -62,39 +65,49 @@ CREATE TABLE defect_info(
 
 LOCK TABLES defect_info WRITE;
 INSERT INTO defect_info
-VALUES (1, 'not safe', 'Open', 'there are too many software vulnerabilities', 'TODO', 'Security Defect',
-        'Low', '1', '1', 'no comment => wow', '2023-10-23 16:41:44','2023-10-23 16:41:44');
+VALUES (1, 'SQL Injection Vulnerability', 'Open', 'The application fails to properly sanitize user input, allowing malicious SQL statements to be executed, leading to unauthorized access or data manipulation', 'TODO', 'Security Defect',
+        'Low', '1', '1', 'fix it tomorrow => almost done', '2023-10-23 16:41:44','2023-10-23 16:41:44');
 INSERT INTO defect_info
-VALUES (2, 'not beautiful', 'Open', 'The software interface is really ugly', 'TODO', 'Unit Level Defect',
-        'High', '2', '2', 'no comment', '2023-10-23 18:41:44','2023-10-23 18:41:44');
+VALUES (2, 'Cross-Site Scripting (XSS) Vulnerability', 'Open', 'The application does not properly validate and sanitize user-supplied input, allowing the execution of malicious scripts in a victim''s browser, leading to session hijacking or information theft', 'TODO', 'Security Defect',
+        'High', '1', '1', 'fix it today', '2023-10-23 18:41:44','2023-10-23 18:41:44');
 INSERT INTO defect_info
-VALUES (3, 'diu lei', 'Fixed', 'lao mu', 'FINISHED', 'Workflow Defect',
-        'Critical', '2', '1', 'no comment', '2023-10-23 18:54:44','2023-10-23 18:54:44');
+VALUES (3, 'Incorrect Approval Routing', 'Fixed', 'The workflow system is configured with incorrect approval routing, causing approval requests to be sent to the wrong individuals or departments, leading to delays or improper decision-making.', 'FINISHED', 'Workflow Defect',
+        'Critical', '1', '2', 'done', '2023-10-23 18:54:44','2023-10-23 18:54:44');
 INSERT INTO defect_info
-VALUES (4, 'TEST 4', 'ReOpened', 'TEST 4', 'TODO', 'Workflow Defect',
-        'Critical', '1', '2', 'no comment', '2023-10-23 18:54:50','2023-10-23 18:54:50');
+VALUES (4, 'Missing or Incomplete Workflow Steps', 'ReOpened', 'The defined workflow process does not include all the necessary steps or actions required for proper task completion, leading to incomplete or inconsistent workflows.', 'TODO', 'Workflow Defect',
+        'Critical', '1', '4', 'done => still need to be fixed', '2023-10-23 18:54:50','2023-10-23 18:54:50');
 INSERT INTO defect_info
-VALUES (5, 'TEST 5', 'Deffered', 'TEST 5', 'FINISHED', 'System-level Integration Defect',
-        'High', '2', '2', 'no comment', '2023-10-23 18:54:51','2023-10-23 18:54:51');
+VALUES (5, 'Data Inconsistencies between Integrated Systems', 'Deferred', 'The integrated systems fail to synchronize and maintain consistent data, resulting in discrepancies and conflicts when accessing or updating information across different systems.', 'FINISHED', 'System-level Integration Defect',
+        'High', '1', '5', 'done', '2023-10-23 18:54:51','2023-10-23 18:54:51');
 INSERT INTO defect_info
-VALUES (6, 'TEST 6', 'NotABug', 'TEST 6', 'FINISHED', 'Functional Defect',
-        'Medium', '2', '1', 'no comment', '2023-10-23 18:54:52','2023-10-23 18:54:52');
+VALUES (6, 'Incorrect Calculation of Total', 'NotABug', 'The system performs incorrect calculations when determining the total value, resulting in inaccurate totals for quantities, prices, or financial calculations', 'FINISHED', 'Functional Defect',
+        'Medium', '1', '2', 'I am right', '2023-10-23 18:54:52','2023-10-23 18:54:52');
 INSERT INTO defect_info
-VALUES (7, 'TEST 7', 'Open', 'TEST 7', 'TODO', 'Functional Defect',
-        'High', '2', '1', 'no comment', '2023-10-23 18:57:52','2023-10-23 18:57:52');
+VALUES (7, 'Search Function Returns Incomplete Results', 'Open', 'The search function fails to retrieve and display all relevant results, omitting certain records or providing incomplete search results, leading to user frustration and information gaps.', 'TODO', 'Functional Defect',
+        'High', '1', '1', '', '2023-10-23 18:57:52','2023-10-23 18:57:52');
 INSERT INTO defect_info
-VALUES (8, 'TEST 8', 'Open', 'TEST 8', 'TODO', 'Functional Defect',
-        'High', '2', '1', 'no comment', '2023-10-23 19:57:52','2023-10-23 19:57:52');
+VALUES (8, 'Incorrect Handling of User Input', 'Open', 'The system does not properly validate or handle user input, allowing invalid or unexpected inputs to cause errors, crashes, or incorrect behavior in the application.', 'TODO', 'Functional Defect',
+        'High', '1', '3', '', '2023-10-23 19:57:52','2023-10-23 19:57:52');
 INSERT INTO defect_info
-VALUES (9, 'TEST 9', 'Open', 'TEST 9', 'TODO', 'Functional Defect',
-        'High', '2', '1', 'no comment', '2023-10-23 19:59:52','2023-10-23 19:59:52');
+VALUES (9, 'Inconsistent Behavior Across Platforms', 'Open', 'The application exhibits inconsistent behavior or functionality when accessed from different platforms or devices, leading to user confusion and a lack of uniform user experience.', 'TODO', 'Functional Defect',
+        'High', '1', '4', '', '2023-10-23 19:59:52','2023-10-23 19:59:52');
 INSERT INTO defect_info
-VALUES (10, 'TEST 10', 'Open', 'TEST 10', 'TODO', 'Functional Defect',
-        'Critical', '2', '1', 'no comment', '2023-10-23 19:10:52','2023-10-23 19:10:52');
+VALUES (10, 'Missing or Incomplete Error Handling', 'Open', 'The system lacks proper error handling mechanisms, resulting in unhandled exceptions, error messages that do not provide meaningful guidance, or system crashes when errors occur.', 'TODO', 'Functional Defect',
+        'Critical', '1', '5', 'no comment', '2023-10-23 19:10:52','2023-10-23 19:10:52');
 INSERT INTO defect_info
-VALUES (11, 'TEST 11', 'Open', 'TEST 11', 'TODO', 'Functional Defect',
+VALUES (11, 'Incorrect Notification Triggers', 'Open', 'The workflow system is triggering notifications at incorrect or inappropriate stages of the workflow, resulting in unnecessary or missed notifications, which can impact communication and decision-making.', 'TODO', 'Workflow Defect',
         'High', '1', '1', 'no comment', '2023-10-23 19:11:52','2023-10-23 19:11:52');
 INSERT INTO defect_info
-VALUES (12, 'TEST 12', 'Open', 'TEST 12', 'TODO', 'Workflow Defect',
+VALUES (12, 'Insecure File Upload', 'Open', 'The application does not properly validate or restrict the file types and content during the file upload process, enabling attackers to upload malicious files that can compromise the system.', 'TODO', 'Security Defect',
         'High', '1', '2', 'no comment', '2023-10-23 19:12:52','2023-10-23 19:12:52');
+INSERT INTO defect_info
+VALUES (13, 'Null Pointer Exception', 'Open', 'The code attempts to access or manipulate a null object reference, resulting in a runtime exception and potential program termination', 'TODO', 'Unit Level Defect',
+        'High', '1', '1', 'no comment', '2023-10-23 19:11:52','2023-10-23 19:11:52');
+INSERT INTO defect_info
+VALUES (14, 'Off-by-One Error', 'Open', 'The code incorrectly increments or decrements a loop or index variable, resulting in incorrect array or collection access, and leading to unexpected behavior or incorrect results.', 'TODO', 'Unit Level Defect',
+        'High', '1', '1', 'no comment', '2023-10-23 19:11:52','2023-10-23 19:11:52');
+INSERT INTO defect_info
+VALUES (15, 'Memory Leak', 'Open', 'The code fails to release dynamically allocated memory after it is no longer needed, leading to a gradual depletion of available memory resources and potential system instability or crashes.', 'TODO', 'Unit Level Defect',
+        'High', '1', '1', 'no comment', '2023-10-23 19:11:52','2023-10-23 19:11:52');
+
 UNLOCK TABLES;
