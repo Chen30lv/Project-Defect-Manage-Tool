@@ -87,9 +87,9 @@
           "group": "navigation"
         },
         {
-        "command": "dashboard.submit",
-        "when": "view == dashboard",
-        "group": "navigation"
+          "command": "dashboard.submit",
+          "when": "view == dashboard",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
@@ -112,7 +112,7 @@
         {
           "when": "view == dashboard && viewItem == editableEntry",
           "command": "dashboard.edit",
-          "group": "inline" 
+          "group": "inline"
         }
       ]
     }
@@ -146,6 +146,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "lodash": "^4.17.21"
   }
 }

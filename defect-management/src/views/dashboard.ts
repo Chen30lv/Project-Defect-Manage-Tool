@@ -1,6 +1,86 @@
 import * as vscode from 'vscode';
 import axios, { AxiosInstance } from 'axios';
-import { GlobalState } from '../utils/globalState';
+import { GlobalState, ProjectStats } from '../utils/globalState';
+
+const path = require('path');
+const fs = require('fs');
+
+
+function drawPieChart(statisticsType: 'Project Statistics' | 'Level Statistics') {
+  const stats: ProjectStats = {};
+
+  GlobalState.defectInfoArray.forEach(defect => {
+      let key;
+      if (statisticsType === 'Project Statistics') {
+          key = defect.project.projectName;
+      } else {
+          key = defect.defectLevel;
+      }
+
+      if (stats[key]) {
+          stats[key]++;
+      } else {
+          stats[key] = 1;
+      }
+  });
+
+  console.log(stats);
+
+  const labels = Object.keys(stats);
+  const counts = Object.values(stats);
+
+  const initialColors = ['#D5D2C1', '#BD8E62', '#A46843', '#370D00', '#C2B280'];
+  const backgroundColors = labels.map((_, index) => {
+      if (index < initialColors.length) {
+          // 使用初始颜色
+          return initialColors[index];
+      } else {
+          // 超出初始颜色范围时，随机生成颜色
+          return `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`;
+      }
+  });
+
+  const chartConfig = {
+      type: 'pie',
+      data: {
+          datasets: [
+              {
+                  data: counts,
+                  backgroundColor: backgroundColors,
+                  label: 'My dataset',
+              },
+          ],
+          labels: labels, 
+      },
+      options: {
+          legend: {
+              position: 'right',
+              labels: {
+                  boxWidth: 10, 
+                  fontSize: 7, 
+              },
+          },
+          title: {
+              display: false,
+              text: 'Pie Chart',
+          },
+          layout: {
+            padding: {
+                top: 15,
+                bottom: 15,
+                left: 15,
+                right: 15
+            }
+          },
+      },
+  };
+
+  const width = 320;
+  const height = 180;
+  const chartUrl = `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(chartConfig))}&backgroundColor=white&width=${width}&height=${height}`;
+  return chartUrl;
+}
+
 
 function selectEmoji(Level: string): string {
   switch (Level) {
@@ -62,20 +142,53 @@ async function modifyStatus(context: vscode.ExtensionContext, item: SideBarEntry
 	}
 }
 
+async function addComments(context: vscode.ExtensionContext, item: SideBarEntryItem, comment: string): Promise<void> {
+	try {
+	  const httpClient = axios.create({
+      baseURL: 'http://134.175.54.235:8101', // 设置你的baseURL
+      withCredentials: true,
+    });
+  
+    console.log(comment)
+
+    const data = {
+      defectComment: comment,
+      id: item.defectID,
+      userId: item.userId
+    };
+
+	  // 使用httpClient进行POST请求
+	  const response = await httpClient.post('/api/defectInfo/update', data);
+  
+    console.log('Response:', response.data);
+    GlobalState.defectInfoArray = response.data.data;
+    console.log(GlobalState.defectInfoArray);
+
+	} catch (error) {
+	  console.error('Error during data posting:', error);
+	}
+}
+
 
 // Custom Tree Item Class
 export class SideBarEntryItem extends vscode.TreeItem {
   constructor(public readonly defectName: string, public readonly defectID: number,
-     public readonly userId: number,
+     public readonly userId: number, public readonly projectName: string,
      public readonly defectStatus: string, public readonly defectType: string, 
      public readonly defectLevel: string, public readonly defectDetail: string, 
      public readonly defectComment: string, public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
 
     super(defectName, collapsibleState);
     
-
-    if (this.label != "TODO" && this.label != "FINISHED" && this.label != "STATISTICS") {
-      this.description = `Project ${Math.ceil(Math.random() * 1000)}`;
+    if (this.label === "Project Statistics" || this.label === "Level Statistics") {
+      
+      this.contextValue = "statisticsEntry";
+      let tooltipContent = new vscode.MarkdownString();
+      tooltipContent = new vscode.MarkdownString(`![Image](${drawPieChart(this.label)})`);
+      this.tooltip = tooltipContent;
+      
+    } else if (this.label !== "TODO" && this.label !== "FINISHED" && this.label !== "STATISTICS") {
+      this.description = `${projectName}`;
       this.contextValue = "editableEntry";
       
       let tooltipContent = new vscode.MarkdownString();
@@ -86,10 +199,9 @@ export class SideBarEntryItem extends vscode.TreeItem {
       tooltipContent.appendMarkdown(`**Defect Detail:**\n${defectDetail}\n\n`);
       tooltipContent.appendMarkdown(`---\n\n`);
       tooltipContent.appendMarkdown(`**Defect Comments:**\n${defectComment}\n`);
-
+      
+      tooltipContent.isTrusted = true;
       this.tooltip = tooltipContent;
-      this.tooltip.isTrusted = true;
-
     }
   }
 }
@@ -110,14 +222,16 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
 
   getChildren(element?: SideBarEntryItem): vscode.ProviderResult<SideBarEntryItem[]> {
     if (element) {
+      if (element?.label === "STATISTICS") {
+        return Promise.resolve([
+            new SideBarEntryItem('Project Statistics', 0, 0, '', '', '', '', '', '', vscode.TreeItemCollapsibleState.None),
+            new SideBarEntryItem('Level Statistics', 0, 0, '', '', '', '', '', '', vscode.TreeItemCollapsibleState.None)
+        ]);
+      }
       // Child nodes
       var childrenList = [];
-      console.log("array length:");
-      console.log(GlobalState.defectInfoArray.length)
       for (let index = 0; index < GlobalState.defectInfoArray.length; index++) {
         //console.log(GlobalState.defectInfoArray[index].isToDo)
-        console.log(GlobalState.defectInfoArray[index]);
-        console.log(element.label)
         
         if (GlobalState.defectInfoArray[index].isToDo == element.label) {
           let emoji: string = selectEmoji(GlobalState.defectInfoArray[index].defectLevel);
@@ -125,6 +239,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
             GlobalState.defectInfoArray[index].defectName,
             GlobalState.defectInfoArray[index].id,
             GlobalState.defectInfoArray[index].userId,
+            GlobalState.defectInfoArray[index].project.projectName,
             GlobalState.defectInfoArray[index].defectStatus,
             GlobalState.defectInfoArray[index].defectType,
             emoji,
@@ -149,6 +264,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           "null",
           "null",
           "null",
+          "null",
           vscode.TreeItemCollapsibleState.Expanded
         ),
         new SideBarEntryItem(
@@ -160,12 +276,14 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           "null",
           "null",
           "null",
+          "null",
           vscode.TreeItemCollapsibleState.Expanded
         ),
         new SideBarEntryItem(
           'STATISTICS',
           0,
           0,
+          "null",
           "null",
           "null",
           "null",
@@ -217,7 +335,10 @@ function registerDashboardCommands(context: vscode.ExtensionContext ,sidebar: Si
       placeHolder: "Type the new data here"
     });
     if (userInput) {
-      vscode.window.showInformationMessage(`asdasdasd ${item.defectName}`);
+      await addComments(context, item, userInput);
+      await fetchData(context);
+      sidebar.refresh();
+      vscode.window.showInformationMessage(`Add a comment for defect: ${item.defectName}`);
     }
   
   }));
