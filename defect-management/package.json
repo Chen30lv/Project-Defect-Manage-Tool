@@ -48,11 +48,6 @@
         "icon": "media/refresh.svg"
       },
       {
-        "command": "dashboard.submit",
-        "title": "submitFixed,Defered,NotABug,Duplicate",
-        "icon": "media/submit.svg"
-      },
-      {
         "command": "dashboard.edit",
         "title": "edit",
         "icon": "$(pencil)"
@@ -83,11 +78,6 @@
         },
         {
           "command": "dashboard.refresh",
-          "when": "view == dashboard",
-          "group": "navigation"
-        },
-        {
-          "command": "dashboard.submit",
           "when": "view == dashboard",
           "group": "navigation"
         }

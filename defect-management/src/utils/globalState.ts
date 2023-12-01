@@ -24,7 +24,7 @@ interface DefectInfo {
   isToDo : string;
   userId: number;
   projectId: number;
-  defectComment: string;
+  defectComment: string[];
   createTime: string;
   updateTime: string;
 }

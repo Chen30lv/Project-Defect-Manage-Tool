@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 
+
 function drawPieChart(statisticsType: 'Project Statistics' | 'Level Statistics') {
   const stats: ProjectStats = {};
 
@@ -24,7 +25,6 @@ function drawPieChart(statisticsType: 'Project Statistics' | 'Level Statistics')
       }
   });
 
-  console.log(stats);
 
   const labels = Object.keys(stats);
   const counts = Object.values(stats);
@@ -104,7 +104,7 @@ async function fetchData(context: vscode.ExtensionContext): Promise<void> {
     });
   
 	  // 使用httpClient进行POST请求
-	  const response = await httpClient.post('/api/defectInfo/search/MyDefectInfoVOList?userId=2', {
+	  const response = await httpClient.post('/api/defectInfo/search/MyDefectInfoProVOList?userId=1', {
 		// 你的POST数据
 	  });
   
@@ -172,11 +172,18 @@ async function addComments(context: vscode.ExtensionContext, item: SideBarEntryI
 
 // Custom Tree Item Class
 export class SideBarEntryItem extends vscode.TreeItem {
-  constructor(public readonly defectName: string, public readonly defectID: number,
-     public readonly userId: number, public readonly projectName: string,
-     public readonly defectStatus: string, public readonly defectType: string, 
-     public readonly defectLevel: string, public readonly defectDetail: string, 
-     public readonly defectComment: string, public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
+  constructor(
+    public readonly defectName: string, 
+    public readonly defectID: number,
+    public readonly userId: number, 
+    public readonly projectName: string,
+    public readonly defectStatus: string, 
+    public readonly defectType: string, 
+    public readonly defectLevel: string, 
+    public readonly defectDetail: string, 
+    public readonly defectComments: string[], 
+    public readonly collapsibleState: vscode.TreeItemCollapsibleState
+  ) {
 
     super(defectName, collapsibleState);
     
@@ -198,7 +205,13 @@ export class SideBarEntryItem extends vscode.TreeItem {
       tooltipContent.appendMarkdown(`---\n\n`);
       tooltipContent.appendMarkdown(`**Defect Detail:**\n${defectDetail}\n\n`);
       tooltipContent.appendMarkdown(`---\n\n`);
-      tooltipContent.appendMarkdown(`**Defect Comments:**\n${defectComment}\n`);
+      tooltipContent.appendMarkdown(`**Defect Comments**\n\n`);
+      console.log(defectComments);
+      defectComments.forEach(comment => {
+        tooltipContent.appendMarkdown(`---\n\n`);
+        tooltipContent.appendMarkdown(`**Comment:** ${comment}\n\n`);
+        
+      });
       
       tooltipContent.isTrusted = true;
       this.tooltip = tooltipContent;
@@ -224,8 +237,8 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
     if (element) {
       if (element?.label === "STATISTICS") {
         return Promise.resolve([
-            new SideBarEntryItem('Project Statistics', 0, 0, '', '', '', '', '', '', vscode.TreeItemCollapsibleState.None),
-            new SideBarEntryItem('Level Statistics', 0, 0, '', '', '', '', '', '', vscode.TreeItemCollapsibleState.None)
+            new SideBarEntryItem('Project Statistics', 0, 0, '', '', '', '', '', [], vscode.TreeItemCollapsibleState.None),
+            new SideBarEntryItem('Level Statistics', 0, 0, '', '', '', '', '', [], vscode.TreeItemCollapsibleState.None)
         ]);
       }
       // Child nodes
@@ -264,7 +277,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           "null",
           "null",
           "null",
-          "null",
+          [],
           vscode.TreeItemCollapsibleState.Expanded
         ),
         new SideBarEntryItem(
@@ -276,7 +289,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           "null",
           "null",
           "null",
-          "null",
+          [],
           vscode.TreeItemCollapsibleState.Expanded
         ),
         new SideBarEntryItem(
@@ -288,7 +301,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           "null",
           "null",
           "null",
-          "null",
+          [],
           vscode.TreeItemCollapsibleState.Expanded
         ),
       ]
@@ -330,12 +343,27 @@ function registerDashboardCommands(context: vscode.ExtensionContext ,sidebar: Si
   }));
 
   context.subscriptions.push(vscode.commands.registerCommand('dashboard.edit', async (item) => {
+    
+    let activeEditor = vscode.window.activeTextEditor;
+    let formattedSelection = '';
+
+    if (activeEditor) {
+        let selection = activeEditor.selection;
+        let startLine = selection.start.line + 1;
+        let endLine = selection.end.line + 1;
+        let fileName = path.basename(activeEditor.document.fileName);
+        formattedSelection = `${fileName}: line ${startLine}-${endLine}`;
+    }
+
     const userInput = await vscode.window.showInputBox({
-      prompt: "Enter new data",
-      placeHolder: "Type the new data here"
+      prompt: "Enter your comment on this defect",
+      placeHolder: "Type your comment here"
     });
     if (userInput) {
-      await addComments(context, item, userInput);
+      
+      let formattedComment = formattedSelection ? `${formattedSelection}; ${userInput}` : userInput;
+      
+      await addComments(context, item, formattedComment);
       await fetchData(context);
       sidebar.refresh();
       vscode.window.showInformationMessage(`Add a comment for defect: ${item.defectName}`);
