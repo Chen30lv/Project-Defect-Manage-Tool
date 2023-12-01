@@ -31,10 +31,7 @@ import static com.cityu.defect.constant.UserConstant.USER_LOGIN_STATE;
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    /**
-     * 盐值：混淆密码
-     */
-//    private static final String SALT = "DEFECT";
+    private static final String SALT = "DEFECT";
     @Resource
     private UserMapper userMapper;
     @Override
@@ -42,23 +39,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //1. 校验
         // 非空
         if (account.isEmpty() || password.isEmpty() || checkPassword.isEmpty()) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"params cannot be null");
         }
         //长度
         if (account.length() < 4) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号长度过短");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"the account is too short");
         }
         if(password.length()<8 || checkPassword.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度过短");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"the password is too short");
         }
         //账户不能包含特殊字符
         String pattern = ".*[*?!&￥$%^#,./@\";:><\\]\\[}{\\-=+_\\\\|》《。，、？’‘“”~`）].*$";
         if(Pattern.matches(pattern, account)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号不能包含特殊字符");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"the account cannot contain special characters");
         }
         //密码和校验密码相同
         if(!password.equals(checkPassword)){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码和校验密码相同");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"password is not equal to checkPassword");
         }
         //账户不能重复 (查询了数据库，这个校验应该放到最后校验)
         // 账户不能重复
@@ -66,10 +63,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq("account", account);
         long count = this.baseMapper.selectCount(queryWrapper);
         if(count>0){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号已注册");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"the user already exists");
         }
         //2.加密
-        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
         //3. 插入数据
         User user = new User();
         user.setAccount(account);
@@ -77,7 +74,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setCreateTime(new Timestamp(System.currentTimeMillis()));
         boolean saveResult = this.save(user);
         if (!saveResult) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "database error");
         }
         return user.getId();
     }
@@ -87,17 +84,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //1. 校验
         // 非空
         if (StringUtils.isAnyBlank(account,password)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请求参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"param cannot be null");
         }
         //长度
 //        if (account.length() < 4) {
 //            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号错误");
 //        }
-        if(password.length()<8){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度小于8");
-        }
+//        if(password.length()<8){
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码长度小于8");
+//        }
         //加密
-        String md5Password = DigestUtils.md5DigestAsHex((password).getBytes());
+        String md5Password = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
         //查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account", account);
@@ -105,11 +102,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = this.baseMapper.selectOne(queryWrapper);
         if (user==null) {
             log.info("user login failed, account doesn't exist");
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"账号不正确");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"user login failed, account doesn't exist");
         }
         if(!user.getPassword().equals(md5Password)){
             log.info("user login failed, password is wrong");
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码不正确");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"user login failed, password is wrong");
         }
         //记录用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
@@ -168,7 +165,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public boolean userLogout(HttpServletRequest request) {
         if (request.getSession().getAttribute(USER_LOGIN_STATE) == null) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "you need to login first");
         }
         // 移除登录态
         request.getSession().removeAttribute(USER_LOGIN_STATE);
@@ -185,7 +182,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<User> getQueryWrapper(UserQueryRequest userQueryRequest) {
         if (userQueryRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "param cannot be null");
         }
         Long id = userQueryRequest.getId();
         String account = userQueryRequest.getAccount();
