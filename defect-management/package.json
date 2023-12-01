@@ -1,0 +1,142 @@
+{
+  "name": "defect-management",
+  "displayName": "defect-management",
+  "description": "a vscode extension for defect management",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "defect-management-sidebar",
+          "title": "Defect manegement",
+          "icon": "media/dep.svg"
+        }
+      ]
+    },
+    "views": {
+      "defect-management-sidebar": [
+        {
+          "id": "dashboard",
+          "name": "Dashboard",
+          "icon": "media/dep.svg"
+        }
+      ]
+    },
+    "webviews": [
+      {
+        "id": "myWebview",
+        "name": "My Webview"
+      }
+    ],
+    "commands": [
+      {
+        "command": "dashboard.list",
+        "title": "list",
+        "icon": "media/filter.svg"
+      },
+      {
+        "command": "dashboard.refresh",
+        "title": "refresh",
+        "icon": "media/refresh.svg"
+      },
+      {
+        "command": "dashboard.edit",
+        "title": "edit",
+        "icon": "$(pencil)"
+      },
+      {
+        "command": "dashboard.markAsFixed",
+        "title": "Mark as Fixed"
+      },
+      {
+        "command": "dashboard.markAsDeferred",
+        "title": "Mark as Deferred"
+      },
+      {
+        "command": "dashboard.markAsNotABug",
+        "title": "Mark as Not a Bug"
+      },
+      {
+        "command": "dashboard.markAsDuplicate",
+        "title": "Mark as Duplicate"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "dashboard.list",
+          "when": "view == dashboard",
+          "group": "navigation"
+        },
+        {
+          "command": "dashboard.refresh",
+          "when": "view == dashboard",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "dashboard.markAsFixed",
+          "when": "view == dashboard && viewItem == editableEntry"
+        },
+        {
+          "command": "dashboard.markAsDeferred",
+          "when": "view == dashboard && viewItem == editableEntry"
+        },
+        {
+          "command": "dashboard.markAsNotABug",
+          "when": "view == dashboard && viewItem == editableEntry"
+        },
+        {
+          "command": "dashboard.markAsDuplicate",
+          "when": "view == dashboard && viewItem == editableEntry"
+        },
+        {
+          "when": "view == dashboard && viewItem == editableEntry",
+          "command": "dashboard.edit",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.199",
+    "@types/mocha": "^10.0.2",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.83.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "@vscode/test-electron": "^2.3.4",
+    "eslint": "^8.50.0",
+    "glob": "^10.3.3",
+    "html-webpack-plugin": "^5.5.3",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "lodash": "^4.17.21"
+  }
+}
