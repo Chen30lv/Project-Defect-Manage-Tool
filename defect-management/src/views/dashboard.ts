@@ -345,10 +345,12 @@ function registerDashboardCommands(context: vscode.ExtensionContext ,sidebar: Si
 
     if (activeEditor) {
         let selection = activeEditor.selection;
-        let startLine = selection.start.line + 1;
-        let endLine = selection.end.line + 1;
-        let fileName = path.basename(activeEditor.document.fileName);
-        formattedSelection = `${fileName}: line ${startLine}-${endLine}`;
+        if (!selection.isEmpty) {
+          let startLine = selection.start.line + 1;
+          let endLine = selection.end.line + 1;
+          let fileName = path.basename(activeEditor.document.fileName);
+          formattedSelection = `${fileName}: line ${startLine}-${endLine}`;
+        }
     }
 
     const userInput = await vscode.window.showInputBox({
