@@ -16,7 +16,7 @@ function selectEmoji(Level: string): string {
   return "⚪"; 
 }
 
-async function postData(context: vscode.ExtensionContext): Promise<void> {
+async function fetchData(context: vscode.ExtensionContext): Promise<void> {
 	try {
 	  const httpClient = axios.create({
       baseURL: 'http://134.175.54.235:8101', // 设置你的baseURL
@@ -28,9 +28,34 @@ async function postData(context: vscode.ExtensionContext): Promise<void> {
 		// 你的POST数据
 	  });
   
-	  console.log('Response:', response.data);
-      GlobalState.defectInfoArray = response.data.data;
-      console.log(GlobalState.defectInfoArray);
+    console.log('Response:', response.data);
+    GlobalState.defectInfoArray = response.data.data;
+    console.log(GlobalState.defectInfoArray);
+
+	} catch (error) {
+	  console.error('Error during data posting:', error);
+	}
+}
+
+async function modifyStatus(context: vscode.ExtensionContext, item: SideBarEntryItem, status: string): Promise<void> {
+	try {
+	  const httpClient = axios.create({
+      baseURL: 'http://134.175.54.235:8101', // 设置你的baseURL
+      withCredentials: true,
+    });
+  
+    const data = {
+      defectStatus: status,
+      id: item.defectID,
+      userId: item.userId
+    };
+
+	  // 使用httpClient进行POST请求
+	  const response = await httpClient.post('/api/defectInfo/update', data);
+  
+    console.log('Response:', response.data);
+    GlobalState.defectInfoArray = response.data.data;
+    console.log(GlobalState.defectInfoArray);
 
 	} catch (error) {
 	  console.error('Error during data posting:', error);
@@ -40,13 +65,19 @@ async function postData(context: vscode.ExtensionContext): Promise<void> {
 
 // Custom Tree Item Class
 export class SideBarEntryItem extends vscode.TreeItem {
-  constructor(public readonly defectName: string, public readonly defectStatus: string, public readonly defectType: string, public readonly defectLevel: string, public readonly defectDetail: string, public readonly defectComment: string, public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
+  constructor(public readonly defectName: string, public readonly defectID: number,
+     public readonly userId: number,
+     public readonly defectStatus: string, public readonly defectType: string, 
+     public readonly defectLevel: string, public readonly defectDetail: string, 
+     public readonly defectComment: string, public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
+
     super(defectName, collapsibleState);
-    this.contextValue = `Project ${Math.ceil(Math.random() * 1000)}`;
+    
 
     if (this.label != "TODO" && this.label != "FINISHED" && this.label != "STATISTICS") {
       this.description = `Project ${Math.ceil(Math.random() * 1000)}`;
-
+      this.contextValue = "editableEntry";
+      
       let tooltipContent = new vscode.MarkdownString();
       tooltipContent.appendMarkdown(`**${defectName}** ${defectLevel}\n\n`);
       tooltipContent.appendMarkdown(`- **Status:** ${defectStatus}\n`);
@@ -92,6 +123,8 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
           let emoji: string = selectEmoji(GlobalState.defectInfoArray[index].defectLevel);
           var item = new SideBarEntryItem(
             GlobalState.defectInfoArray[index].defectName,
+            GlobalState.defectInfoArray[index].id,
+            GlobalState.defectInfoArray[index].userId,
             GlobalState.defectInfoArray[index].defectStatus,
             GlobalState.defectInfoArray[index].defectType,
             emoji,
@@ -99,11 +132,7 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
             GlobalState.defectInfoArray[index].defectComment,
             vscode.TreeItemCollapsibleState.None
           )
-          item.command = {
-            command: 'dashboard.openChild', 
-            title: "asd",
-            arguments: [GlobalState.defectInfoArray[index].defectDetail], 
-          }
+          
           childrenList[index] = item
         }
       }
@@ -113,6 +142,8 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
       return [
         new SideBarEntryItem(
           'TODO',
+          0,
+          0,
           "null",
           "null",
           "null",
@@ -122,6 +153,8 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
         ),
         new SideBarEntryItem(
           'FINISHED',
+          0,
+          0,
           "null",
           "null",
           "null",
@@ -131,6 +164,8 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
         ),
         new SideBarEntryItem(
           'STATISTICS',
+          0,
+          0,
           "null",
           "null",
           "null",
@@ -143,26 +178,69 @@ export class SideBarGeneric implements vscode.TreeDataProvider<SideBarEntryItem>
   }
 }
 
-module.exports = function (context: vscode.ExtensionContext) {
+function registerDashboardCommands(context: vscode.ExtensionContext ,sidebar: SideBarGeneric) {
+  context.subscriptions.push(vscode.commands.registerCommand('dashboard.markAsFixed', async (item: SideBarEntryItem)  => {
+    console.log("Start posting");
+    await modifyStatus(context, item, "Fixed");
+    await fetchData(context);
+    sidebar.refresh();
+    vscode.window.showInformationMessage(`Modify status for defect: ${item.defectName}`);
+  }));
+
+  context.subscriptions.push(vscode.commands.registerCommand('dashboard.markAsDeferred', async (item) => {
+    console.log("Start posting");
+    await modifyStatus(context, item, "Deferred");
+    await fetchData(context);
+    sidebar.refresh();
+    vscode.window.showInformationMessage(`Modify status for defect: ${item.defectName}`);
+  }));
+
+  context.subscriptions.push(vscode.commands.registerCommand('dashboard.markAsNotABug', async (item) => {
+    console.log("Start posting");
+    await modifyStatus(context, item, "NotABug");
+    await fetchData(context);
+    sidebar.refresh();
+    vscode.window.showInformationMessage(`Modify status for defect: ${item.defectName}`);
+  }));
+
+  context.subscriptions.push(vscode.commands.registerCommand('dashboard.markAsDuplicate', async (item) => {
+    console.log("Start posting");
+    await modifyStatus(context, item, "Duplicate");
+    await fetchData(context);
+    sidebar.refresh();
+    vscode.window.showInformationMessage(`Modify status for defect: ${item.defectName}`);
+  }));
+
+  context.subscriptions.push(vscode.commands.registerCommand('dashboard.edit', async (item) => {
+    const userInput = await vscode.window.showInputBox({
+      prompt: "Enter new data",
+      placeHolder: "Type the new data here"
+    });
+    if (userInput) {
+      vscode.window.showInformationMessage(`asdasdasd ${item.defectName}`);
+    }
+  
+  }));
+}
+
+
+module.exports = async function (context: vscode.ExtensionContext) {
   // Register Sidebar Panels
-  const sidebarTodo = new SideBarGeneric('dashboard.openChild');
+  const sidebar = new SideBarGeneric();
   
   
-  vscode.window.registerTreeDataProvider('dashboard', sidebarTodo);
+  vscode.window.registerTreeDataProvider('dashboard', sidebar);
   
   vscode.commands.registerCommand('dashboard.refresh', async () => {
     console.log("Start posting");
-    await postData(context);
-    sidebarTodo.refresh();
+    await fetchData(context);
+    sidebar.refresh();
   });
 
-  vscode.commands.registerCommand('dashboard.showContextMenu', (item: SideBarEntryItem) => {
-    // Handle the context menu logic using the item information
-    // You can access item.defectName, item.defectStatus, etc.
-    // Implement your context menu functionality here
-    console.log("asd");
-    // Show a context menu
-    vscode.window.showInformationMessage(`Context menu for: ${item.defectName}`);
-  });
+  registerDashboardCommands(context, sidebar);
+
+  console.log("Start posting");
+  await fetchData(context);
+  sidebar.refresh();
   
 };
