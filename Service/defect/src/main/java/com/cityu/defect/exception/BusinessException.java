@@ -5,7 +5,7 @@ import com.cityu.defect.common.ErrorCode;
 public class BusinessException extends RuntimeException{
 
     /**
-     * 错误码
+     * error code
      */
     private final int code;
 

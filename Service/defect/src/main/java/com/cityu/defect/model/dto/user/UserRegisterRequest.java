@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 注册请求体
+ * UserRegisterRequest
  */
 @Data
 public class UserRegisterRequest implements Serializable {

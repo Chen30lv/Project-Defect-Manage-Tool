@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * 缺点视图，返回给前端
+ * DefectInfoVO，which return to the frontend
  */
 @Data
 public class DefectInfoVO implements Serializable {

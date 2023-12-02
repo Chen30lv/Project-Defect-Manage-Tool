@@ -5,15 +5,15 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 通用返回类
+ * BaseResponse class
  */
 @Data
 public class BaseResponse<T> implements Serializable {
-    //状态码
+    //status code
     private int code;
-    //数据
+    //data
     private T data;
-    //返回信息
+    //message
     private String message;
 
     public BaseResponse(int code, T data, String message) {

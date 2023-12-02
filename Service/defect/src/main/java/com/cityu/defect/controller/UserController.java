@@ -31,7 +31,7 @@ public class UserController {
     private UserService userService;
 
 
-    @ApiOperation("注册/添加用户")
+    @ApiOperation("Register/Add User")
     @PostMapping("/register")
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         if (userRegisterRequest == null) {
@@ -47,7 +47,7 @@ public class UserController {
         return ResultUtils.success(result);
     }
 
-    @ApiOperation("登录")
+    @ApiOperation("User login")
     @PostMapping("/login")
     public BaseResponse<UserVO> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         if (userLoginRequest == null) {
@@ -62,7 +62,7 @@ public class UserController {
         return ResultUtils.success(userVO);
     }
 
-    @ApiOperation("登出")
+    @ApiOperation("User Logout")
     @PostMapping("/logout")
     public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
         if (request == null) {
@@ -72,14 +72,14 @@ public class UserController {
         return ResultUtils.success(result);
     }
 
-    @ApiOperation("获取当前登录用户")
+    @ApiOperation("Get logged in UserVO")
     @GetMapping("/get/login")
     public BaseResponse<UserVO> getLoginUser(HttpServletRequest request) {
         User user = userService.getLoginUser(request);
         return ResultUtils.success(userService.getLoginUserVO(user));
     }
 
-    @ApiOperation("删除用(仅限管理员)）")
+    @ApiOperation("Delete User(Admin only)")
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {

@@ -23,58 +23,58 @@ public class DefectInfo implements Serializable {
     private Long id;
 
     /**
-     * 缺陷名称
+     * defectName
      */
     private String defectName;
 
     /**
-     * 缺陷状态
+     * defectStatus
      */
     private String defectStatus;
 
     /**
-     * 是否完成
+     * isToDo
      */
     private String isToDo;
 
     /**
-     * 缺陷详情
+     * defectDetail
      */
     private String defectDetail;
 
     /**
-     * 缺陷类型
+     * defectType
      */
     private String defectType;
 
     /**
-     * 缺陷等级
+     * defectLevel
      */
     private String defectLevel;
 
     /**
-     * 缺陷所有者 userid列表
+     * userId
      */
     private Long userId;
 
     /**
-     * 缺陷对应项目
+     * projectId
      */
     private Long projectId;
 
     /**
-     * 缺陷注释 长文本类型
+     * defectComment
      */
     private String defectComment;
 
 
     /**
-     * 缺陷创建时间
+     * createTime
      */
     private Timestamp createTime;
 
     /**
-     * 最后修改时间
+     * updateTime
      */
     private Timestamp updateTime;
 

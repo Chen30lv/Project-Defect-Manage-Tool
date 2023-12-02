@@ -2,7 +2,7 @@ package com.cityu.defect.common;
 
 public class ResultUtils {
     /**
-     * 成功
+     * success
      *
      * @param data
      * @param <T>
@@ -13,7 +13,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * error
      *
      * @param errorCode
      * @return
@@ -23,7 +23,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * error
      *
      * @param code
      * @param message
@@ -34,7 +34,7 @@ public class ResultUtils {
     }
 
     /**
-     * 失败
+     * error
      *
      * @param errorCode
      * @return

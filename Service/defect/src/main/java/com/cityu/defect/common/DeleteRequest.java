@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 删除请求（用户、缺陷）
+ * DeleteRequest（User、DefectInfo）
  */
 @Data
 public class DeleteRequest implements Serializable {

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * 脱敏后用户视图，返回给前端
+ * After desensitization the user view is returned to the front end
  */
 @Data
 public class UserVO implements Serializable {
@@ -14,7 +14,7 @@ public class UserVO implements Serializable {
     private Long id;
 
     /**
-     * 账户
+     * account
      */
     private String account;
 
@@ -24,11 +24,11 @@ public class UserVO implements Serializable {
 //    private String role;
 
     /**
-     * 用户创建时间
+     * createTime
      */
     private Timestamp createTime;
     /**
-     * 用户更新时间
+     * updateTime
      */
     private Timestamp updateTime;
 

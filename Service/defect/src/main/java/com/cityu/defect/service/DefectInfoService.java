@@ -14,34 +14,34 @@ import java.util.List;
 
 public interface DefectInfoService extends IService<DefectInfo> {
     /**
-     * 获取查询条件
+     * get QueryWrapper
      */
     List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest);
     /**
-     * 校验
+     * valid DefectInfo
      */
     void validDefectInfo(DefectInfo defectInfo);
     /**
-     * 根据用户id查询对应缺陷列表
+     * find the list of defectInfo By UserId
      */
     List<DefectInfo> findByUserId(Long userId);
     /**
-     * 根据缺陷列表获取前端展示列表
+     * get DefectInfoVO By DefectInfo
      */
     List<DefectInfoVO> getDefectInfoVO(List<DefectInfo> defectInfoList);
     /**
-     * 根据缺陷列表获取前端展示列表pro
+     * get DefectInfoProVO By DefectInfo
      */
     List<DefectInfoProVO> getDefectInfoProVO(List<DefectInfo> defectInfoList);
     /**
-     * 多字段统计
+     * Multi field statistics
      * @param statisticQueryRequest
      * @return
      */
     List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest);
 
     /**
-     * 更改部分缺陷
+     * Update DefectInfo
      * @param defectInfo
      * @return
      */

@@ -9,9 +9,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * 用户数据库操作
- */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 //    List<User> selectList(@Param(Constants.WRAPPER) QueryWrapper<User> userQueryWrapper);

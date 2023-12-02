@@ -30,8 +30,8 @@ public class DefectInfoController {
     private DefectInfoService defectInfoService;
     @Resource
     private UserService userService;
-    //改查
-    @ApiOperation("修改缺陷")
+
+    @ApiOperation("Update the DefectInfo")
     @PostMapping("/update")
     public BaseResponse<Boolean> UpdateDefectInfo(@RequestBody DefectInfoUpdateRequest defectInfoUpdateRequest, HttpServletRequest request){
         if (defectInfoUpdateRequest == null || defectInfoUpdateRequest.getId() <= 0) {
@@ -49,7 +49,7 @@ public class DefectInfoController {
         return ResultUtils.success(result);
     }
 
-    @ApiOperation("已登录用户条件查询缺陷列表")
+    @ApiOperation("logged in user to query the defectInfo list")
     @PostMapping("/search")
     public BaseResponse<List<DefectInfoVO>> searchDefectInfoVO(@RequestBody DefectInfoQueryRequest defectInfoQueryRequest, HttpServletRequest request){
 //        User loginUser = userService.getLoginUser(request);
@@ -70,10 +70,7 @@ public class DefectInfoController {
         return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoList));
     }
 
-    /**
-     * 获取当前用户的缺陷列表
-     */
-    @ApiOperation("获取当前登录用户全部缺陷列表")
+    @ApiOperation("Obtain the defectInfo list of the current login user")
     @PostMapping("/search/MyDefectInfoVOList")
     public BaseResponse<List<DefectInfoVO>> listMyDefectInfoVO(Long userId,HttpServletRequest request) {
 //        if (request == null) {
@@ -88,10 +85,7 @@ public class DefectInfoController {
         return ResultUtils.success(defectInfoService.getDefectInfoVO(defectInfoList));
     }
 
-    /**
-     * 获取当前用户的缺陷列表
-     */
-    @ApiOperation("获取当前登录用户全部缺陷列表(json comments)")
+    @ApiOperation("Obtain the defectInfo list of the current login user(json comments)")
     @PostMapping("/search/MyDefectInfoProVOList")
     public BaseResponse<List<DefectInfoProVO>> listMyDefectInfoProVO(Long userId, HttpServletRequest request) {
 //        if (request == null) {
