@@ -9,6 +9,10 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Chen30lv/Project-Defect-Manage-Tool.git"
+  },
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
@@ -17,7 +21,7 @@
         {
           "id": "defect-management-sidebar",
           "title": "Defect manegement",
-          "icon": "media/dep.svg"
+          "icon": "media/icon.svg"
         }
       ]
     },
@@ -25,8 +29,7 @@
       "defect-management-sidebar": [
         {
           "id": "dashboard",
-          "name": "Dashboard",
-          "icon": "media/dep.svg"
+          "name": "Dashboard"
         }
       ]
     },
