@@ -1,6 +1,6 @@
 # defect-management README
 
-This is the README for your extension "defect-management". After writing up a brief description, we recommend including the following sections.
+We create a defect management tool using agile development methods within the VSCode ecosystem. The goal was to improve developer efficiency in the defect modification process by reducing distractions from frequent screen changes. We achieved this by adopting a front-end and back-end separation of architecture, which enabled the decoupling of front and back ends, separation of dynamic and static resources, and improved testability and scalability. The front-end is a VSCode extension, designed to match VSCode's consistent style of use and logic, to ensure usability and meet the user's habits and needs. 
 
 ## Features
 

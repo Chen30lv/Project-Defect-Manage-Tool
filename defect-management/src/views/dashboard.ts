@@ -30,7 +30,13 @@ function drawPieChart(statisticsType: 'Project Statistics' | 'Level Statistics')
   const labels = Object.keys(stats);
   const counts = Object.values(stats);
 
-  const initialColors = ['#D5D2C1', '#BD8E62', '#A46843', '#370D00', '#C2B280'];
+  const initialColors = [
+    'rgba(255, 99, 132, 0.5)',
+    'rgba(255, 159, 64, 0.5)',
+    'rgba(255, 205, 86, 0.5)',
+    'rgba(75, 192, 192, 0.5)',
+    'rgba(54, 162, 235, 0.5)',
+  ];
   const backgroundColors = labels.map((_, index) => {
       if (index < initialColors.length) {
           // 使用初始颜色
