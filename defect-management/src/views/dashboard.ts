@@ -372,6 +372,32 @@ function registerDashboardCommands(context: vscode.ExtensionContext ,sidebar: Si
   }));
 }
 
+export function showPopup(context: vscode.ExtensionContext) {
+  let fix = 0;
+  let todo = 0;
+  let lastPopupDate = context.globalState.get('lastPopupDate');
+  const now = moment().tz("Asia/Hongkong");
+  const today = now.format('YYYY-MM-DD');
+  if (lastPopupDate == today) {//这里的代码目前是检测为今天就弹窗后续需要改为！=
+    let content = ' ';
+    GlobalState.defectInfoArray.forEach(defect => {
+      if(defect.defectStatus == 'Open'){
+        todo += 1;
+      }
+      else if(defect.defectStatus == 'ReOpened'){
+        todo += 1;
+      }
+      else{
+        fix +=1;
+      }
+      content = `Todo: ${todo}, Finished: ${fix}\n`;
+    });
+    vscode.window.showInformationMessage(content);
+    context.globalState.update('lastPopupDate', today);
+  }
+
+}
+
 
 module.exports = async function (context: vscode.ExtensionContext) {
   // Register Sidebar Panels
@@ -391,5 +417,6 @@ module.exports = async function (context: vscode.ExtensionContext) {
   console.log("Start posting");
   await fetchData(context);
   sidebar.refresh();
+  showPopup(context);
   
 };
