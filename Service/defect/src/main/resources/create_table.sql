@@ -17,7 +17,7 @@ CREATE TABLE user (
 
 LOCK TABLES user WRITE;
 INSERT INTO user (id, account, password, create_time, update_time)
-VALUES (1, 'dy', md5("12345678"), '2023-10-22 16:41:44', '2023-10-22 16:41:44');
+VALUES (1, 'dingyi', md5("12345678"), '2023-10-22 16:41:44', '2023-10-22 16:41:44');
 INSERT INTO user (id, account, password, create_time, update_time)
 VALUES (2, 'wyc', md5("12345678"), '2023-10-23 16:41:44', '2023-10-23 16:41:44');
 # INSERT INTO user (id, account, password, create_time, update_time)

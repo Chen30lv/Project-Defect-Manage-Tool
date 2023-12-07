@@ -34,7 +34,7 @@ public class ResultUtils {
     }
 
     /**
-     * error
+     * errorU
      *
      * @param errorCode
      * @return

@@ -31,19 +31,19 @@ class DefectInfoControllerTests {
         BusinessException businessException = assertThrows(BusinessException.class,() ->{
             defectInfoController.UpdateDefectInfo(defectInfoUpdateRequest,request);
         });
-        System.out.println(businessException.getMessage());
+        System.out.println("Test1: " + businessException.getMessage());
         //invalid
         defectInfoUpdateRequest.setId(1L);
         defectInfoUpdateRequest.setDefectStatus("wow");
         businessException = assertThrows(BusinessException.class,() ->{
             defectInfoController.UpdateDefectInfo(defectInfoUpdateRequest,request);
         });
-        System.out.println(businessException.getMessage());
+        System.out.println("Test2: " + businessException.getMessage());
         //success
         defectInfoUpdateRequest.setId(1L);
         defectInfoUpdateRequest.setDefectStatus(DefectStatusEnum.DEFERRED.getValue());
         defectInfoUpdateRequest.setDefectComment("deferred!");
-        System.out.println(defectInfoController.UpdateDefectInfo(defectInfoUpdateRequest,request).getMessage());
+        System.out.println("Test3: " + defectInfoController.UpdateDefectInfo(defectInfoUpdateRequest,request).getMessage());
     }
     @Test
     void testSearch(){
@@ -64,6 +64,6 @@ class DefectInfoControllerTests {
     void testMyDefectInfoProVOList(){
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
-        System.out.println(defectInfoController.listMyDefectInfoProVO(1L,request));
+//        System.out.println(defectInfoController.listMyDefectInfoProVO(1L,request));
     }
 }
