@@ -42,7 +42,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     public List<DefectInfo> getQueryWrapper(DefectInfoQueryRequest defectInfoQueryRequest) {
         QueryWrapper<DefectInfo> queryWrapper = new QueryWrapper<>();
         if (defectInfoQueryRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "param cannot be null");
         }
 
         DefectInfo defectInfo = new DefectInfo();
@@ -87,22 +87,22 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         Long projectId = defectInfo.getProjectId();
 
         if(StringUtils.isNotBlank(defectLevel) && DefectLevelEnum.getEnumByValue(defectLevel) == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectLevel不符合规范");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectLevel does not comply with the specification");
         }
         if(StringUtils.isNotBlank(defectType) && DefectTypeEnum.getEnumByValue(defectType) == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectType不符合规范");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectType does not comply with the specification");
         }
         if(StringUtils.isNotBlank(defectStatus) && DefectStatusEnum.getEnumByValue(defectStatus) == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus does not comply with the specification");
         }
         if(StringUtils.isNotBlank(isToDo) && DefectToDoEnum.getEnumByValue(isToDo) == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "isToDo不符合规范");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "isToDo does not comply with the specification");
         }
         if (userId != null && userService.getById(userId) == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "user不存在");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "user doesn't exist");
         }
         if (projectId != null && projectService.getById(projectId) == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "project不存在");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "project doesn't exist");
         }
     }
 
@@ -146,7 +146,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
     public List<StatisticVO> listStatistic(StatisticQueryRequest statisticQueryRequest){
 
         if (statisticQueryRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "param cannot be null");
         }
         String key = statisticQueryRequest.getKey();
         Long userId = statisticQueryRequest.getUserId();
@@ -180,7 +180,7 @@ public class DefectInfoServiceImpl extends ServiceImpl<DefectInfoMapper,DefectIn
         String defectCommentOld = oldDefectInfo.getDefectComment();
         DefectStatusEnum statusEnum = DefectStatusEnum.getEnumByValueUpdate(defectStatus);
         if(StringUtils.isNotBlank(defectStatus) && statusEnum == null){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus不符合规范");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "defectStatus does not comply with the specification");
         }
         else if(statusEnum != null){
             oldDefectInfo.setDefectStatus(defectStatus);

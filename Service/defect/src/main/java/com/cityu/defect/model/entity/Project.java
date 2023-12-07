@@ -23,7 +23,7 @@ public class Project implements Serializable {
     private Long id;
 
     /**
-     * 项目名称
+     * projectName
      */
     private String projectName;
 

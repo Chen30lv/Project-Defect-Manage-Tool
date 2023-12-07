@@ -3,12 +3,11 @@ package com.cityu.defect.exception;
 import com.cityu.defect.common.ErrorCode;
 
 /**
- * 抛异常工具类
+ * Exception throwing tool class
  */
 public class ThrowUtils {
 
     /**
-     * 条件成立则抛异常
      *
      * @param condition
      * @param runtimeException
@@ -20,7 +19,6 @@ public class ThrowUtils {
     }
 
     /**
-     * 条件成立则抛异常
      *
      * @param condition
      * @param errorCode
@@ -30,7 +28,6 @@ public class ThrowUtils {
     }
 
     /**
-     * 条件成立则抛异常
      *
      * @param condition
      * @param errorCode

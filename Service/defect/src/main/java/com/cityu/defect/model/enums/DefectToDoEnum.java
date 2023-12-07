@@ -21,7 +21,7 @@ public enum DefectToDoEnum {
     }
 
     /**
-     * 获取值列表
+     * getValues
      *
      * @return
      */
@@ -30,7 +30,7 @@ public enum DefectToDoEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * getEnumByValue
      *
      * @param value
      * @return

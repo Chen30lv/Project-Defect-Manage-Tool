@@ -28,22 +28,22 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * 账户
+     * account
      */
     private String account;
 
     /**
-     * 密码
+     * password
      */
     private String password;
 
     /**
-     * 用户创建时间
+     * createTime
      */
     private Timestamp createTime;
 
     /**
-     * 用户更新时间
+     * updateTime
      */
     private Timestamp updateTime;
 

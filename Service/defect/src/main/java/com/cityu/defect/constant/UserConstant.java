@@ -2,10 +2,9 @@ package com.cityu.defect.constant;
 
 public interface UserConstant {
     /**
-     * 用户登录态键
+     * userLoginState
      */
     String USER_LOGIN_STATE = "userLoginState";
-    //  region 权限
 
     /**
      * 默认角色

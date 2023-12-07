@@ -9,9 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.util.Map;
 
-/**
- * project数据库操作
- */
 @Mapper
 public interface ProjectMapper extends BaseMapper<Project> {
 

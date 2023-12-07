@@ -31,7 +31,7 @@ public enum DefectTypeEnum {
     }
 
     /**
-     * 获取值列表
+     * getValues
      *
      * @return
      */
@@ -40,7 +40,7 @@ public enum DefectTypeEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * getEnumByValue
      *
      * @param value
      * @return

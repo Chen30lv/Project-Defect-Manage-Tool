@@ -20,7 +20,7 @@ public enum UserRoleEnum {
     }
 
     /**
-     * 获取值列表
+     * getValues
      *
      * @return
      */
@@ -29,7 +29,7 @@ public enum UserRoleEnum {
     }
 
     /**
-     * 根据 value 获取枚举
+     * getEnumByValue
      *
      * @param value
      * @return

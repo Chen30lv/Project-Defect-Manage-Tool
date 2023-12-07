@@ -11,9 +11,6 @@ import java.io.Serializable;
 public class UserAddRequest implements Serializable {
 
 
-    /**
-     * 账号
-     */
     private String account;
 
 

@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 用户查询请求
+ * UserQueryRequest
  */
 @Data
 public class UserQueryRequest implements Serializable {

@@ -5,7 +5,7 @@ import com.cityu.defect.common.ErrorCode;
 public class BusinessException extends RuntimeException{
 
     /**
-     * 错误码
+     * error code
      */
     private final int code;
 
@@ -13,7 +13,6 @@ public class BusinessException extends RuntimeException{
         super(message);
         this.code = code;
     }
-
     public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();

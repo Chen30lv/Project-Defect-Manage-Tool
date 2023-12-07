@@ -29,7 +29,7 @@ public class StatisticController {
     @Resource
     private DefectInfoService defectInfoService;
 
-    @ApiOperation("多字段统计")
+    @ApiOperation("Multi field statistics")
     @PostMapping("/list")
     public BaseResponse<List<StatisticVO>> list(@RequestBody StatisticQueryRequest statisticQueryRequest
             , HttpServletRequest request) {
